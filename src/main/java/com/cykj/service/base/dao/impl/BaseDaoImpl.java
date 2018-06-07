@@ -44,7 +44,7 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            对象
      * @return T 对象
      */
-    @Override
+
     public T save(T t) throws Exception {
         if (t != null) {
             getCurrentSession().save(t);
@@ -59,7 +59,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            对象集合
      * @return List<T>对象集合
      */
-    @Override
     public List<T> save(List<T> list) throws Exception {
         for (int index = 0; list != null && index < list.size(); index++) {
             T t = list.get(index);
@@ -77,7 +76,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            对象
      * @return T对象
      */
-    @Override
     public T saveOrUpdate(T t) throws Exception {
         if (t != null) {
             getCurrentSession().merge(t);
@@ -92,7 +90,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            对象
      * @return T 对象
      */
-    @Override
     public T update(T t) throws Exception {
         if (t != null) {
             getCurrentSession().update(t);
@@ -112,7 +109,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            对象集合
      * @return Integer 修改行数
      */
-    @Override
     public Integer update(Class<T> c, Map<String, Object> valueParams,
                           Map<String, Object> whereParams) throws Exception {
         StringBuffer hql = new StringBuffer("UPDATE " + c.getSimpleName()
@@ -146,7 +142,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            对象
      * @return T 对象
      */
-    @Override
     public T delete(T t) throws Exception {
         if (t != null) {
             getCurrentSession().delete(t);
@@ -161,7 +156,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            <T> 对象集合
      * @return List<Object>集合
      */
-    @Override
     public List<T> delete(List<T> list) throws Exception {
         for (int index = 0; list != null && index < list.size(); index++) {
             T t = list.get(index);
@@ -180,7 +174,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      * @param whereParams 条件参数集合
      * @return Integer 删除行数
      */
-    @Override
     public Integer delete(Class<T> c, Map<String, Object> whereParams)
             throws Exception {
         StringBuffer hql = new StringBuffer("delete from " + c.getSimpleName()
@@ -206,7 +199,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            SQL语句
      * @return Integer 删除行数
      */
-    @Override
     public Integer deleteBySql(String sql) throws Exception {
         SQLQuery q = getCurrentSession().createSQLQuery(sql);
         return q.executeUpdate();
@@ -238,7 +230,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            分页参数，可以为null ,pages[0]起始页数，pages[1]显示行数
      * @return 结果集List<Map>
      */
-    @Override
     public Map<String,Object> find(Class<T> c, Map<String, Object> whereParams,
                                    String orderBy, int... pages) throws Exception {
         Map<String,Object> map = new HashMap<String, Object>();
@@ -297,7 +288,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            分页参数，可以为null ,pages[0]起始页数，pages[1]显示行数
      * @return 结果集 Map
      */
-    @Override
     public Map<String,Object> find(Class<T> c, String whereSql, Map<String, Object> whereParams,
                                    String orderBy, int page , int rows) throws Exception {
         Map<String,Object> map = new HashMap<String, Object>();
@@ -358,7 +348,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            分页参数，可以为null ,pages[0]起始页数，pages[1]显示行数
      * @return 结果集List<Map>
      */
-    @Override
     public List<?> findBySql(String sql, int... pages) throws Exception {
         SQLQuery q = getCurrentSession().createSQLQuery(sql);
         if (pages != null && pages.length > 1) {
@@ -379,7 +368,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
      *            参数（必须为统计对象的属性），可以为null
      * @return Long
      */
-    @Override
     public BigInteger count(Class<T> c, Map<String, Object> whereParams)
             throws Exception {
         String hql = "SELECT count(*) FROM " + c.getSimpleName() + " WHERE 1=1";
@@ -410,7 +398,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
         return (BigInteger) q.uniqueResult();
     }
 
-    @Override
     public List find(String hql, Map<String, Object> whereParams, String orderBy, int page, int rows) {
         if (StringUtils.isNotEmpty(orderBy)) {
             hql += " ORDER BY " + orderBy;
@@ -435,7 +422,6 @@ public class BaseDaoImpl <T extends Serializable> implements BaseDao<T> {
         return q.list();
     }
 
-    @Override
     public Long count(String hql, Map<String, Object> whereParams) {
         Query q = getCurrentSession().createQuery(hql);
         if (whereParams != null && !whereParams.isEmpty()) {

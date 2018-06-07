@@ -2,18 +2,18 @@ package com.cykj.service.entity;
 
 import com.cykj.service.base.model.BaseEntity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author yangsq
- * @date 2018/6/6 17:16.
+ * @date 2018/6/7 9:44.
  */
 @Entity
-@Table(name = "company", schema = "cykj", catalog = "")
-public class CompanyEntity extends BaseEntity{
+@Table(name = "company")
+public class CompanyEntity extends BaseEntity {
+
     private String name;
     private String addr;
     private String linkman;
@@ -22,6 +22,10 @@ public class CompanyEntity extends BaseEntity{
     private String safe;
     private Integer wokerNormal;
     private Integer wokerSpecial;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date makeTime;
+    private String uniqueId;
+    private String industry;
 
     @Basic
     @Column(name = "name")
@@ -103,35 +107,29 @@ public class CompanyEntity extends BaseEntity{
         this.wokerSpecial = wokerSpecial;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CompanyEntity that = (CompanyEntity) o;
-
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (addr != null ? !addr.equals(that.addr) : that.addr != null) return false;
-        if (linkman != null ? !linkman.equals(that.linkman) : that.linkman != null) return false;
-        if (manager != null ? !manager.equals(that.manager) : that.manager != null) return false;
-        if (viceManager != null ? !viceManager.equals(that.viceManager) : that.viceManager != null) return false;
-        if (safe != null ? !safe.equals(that.safe) : that.safe != null) return false;
-        if (wokerNormal != null ? !wokerNormal.equals(that.wokerNormal) : that.wokerNormal != null) return false;
-        if (wokerSpecial != null ? !wokerSpecial.equals(that.wokerSpecial) : that.wokerSpecial != null) return false;
-
-        return true;
+    @Basic
+    @Column(name = "makeTime")
+    public Date getMakeTime() {
+        return makeTime;
     }
 
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (addr != null ? addr.hashCode() : 0);
-        result = 31 * result + (linkman != null ? linkman.hashCode() : 0);
-        result = 31 * result + (manager != null ? manager.hashCode() : 0);
-        result = 31 * result + (viceManager != null ? viceManager.hashCode() : 0);
-        result = 31 * result + (safe != null ? safe.hashCode() : 0);
-        result = 31 * result + (wokerNormal != null ? wokerNormal.hashCode() : 0);
-        result = 31 * result + (wokerSpecial != null ? wokerSpecial.hashCode() : 0);
-        return result;
+    public void setMakeTime(Date makeTime) {
+        this.makeTime = makeTime;
+    }
+
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
     }
 }

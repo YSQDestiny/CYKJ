@@ -3,6 +3,7 @@ package com.cykj.service.base.service.impl;
 import com.cykj.service.base.dao.BaseDao;
 import com.cykj.service.base.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
@@ -23,6 +24,7 @@ import java.util.Map;
 public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
 
     @Autowired
+    @Qualifier("baseDao")
     private BaseDao<T> baseDao;
 
     /**
@@ -30,7 +32,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *
      * @return Request
      */
-    @Override
     public HttpServletRequest getRequest() {
         return ((ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes()).getRequest();
@@ -41,7 +42,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *
      * @return 上下文环境
      */
-    @Override
     public WebApplicationContext getWebApplicationContext() {
         WebApplicationContext webApplicationContext = ContextLoader
                 .getCurrentWebApplicationContext();
@@ -53,7 +53,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *
      * @return 域名
      */
-    @Override
     public String getBasePath() {
         String basePath = getRequest().getScheme() + "://"
                 + getRequest().getServerName() + "/";
@@ -65,7 +64,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *
      * @return 真实路径
      */
-    @Override
     public String getRealPath() {
         String realPath = getRequest().getSession().getServletContext()
                 .getRealPath("/");
@@ -80,7 +78,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *            对象
      * @return T 对象
      */
-    @Override
     public T save(T t) throws Exception {
         return (T) baseDao.save(t);
     }
@@ -92,7 +89,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *            对象
      * @return T对象
      */
-    @Override
     public T saveOrUpdate(T t) throws Exception {
         return (T) baseDao.saveOrUpdate(t);
     }
@@ -104,7 +100,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *            对象
      * @return T 对象
      */
-    @Override
     public T update(T t) throws Exception {
         return (T) baseDao.update(t);
     }
@@ -116,7 +111,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *            对象
      * @return T 对象
      */
-    @Override
     public T delete(T t) throws Exception {
         return (T) baseDao.delete(t);
     }
@@ -130,7 +124,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *            主键
      * @return T 对象
      */
-    @Override
     public T getById(Class<T> c, Serializable id) throws Exception {
         return (T) baseDao.getById(c, id);
     }
@@ -144,7 +137,6 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *            分页参数，可以为null ,pages[0]起始页数，pages[1]显示行数
      * @return 结果集List<Map>
      */
-    @Override
     public Map<String,Object> find(Class<T> c, Map<String, Object> whereParams,
                                    String orderBy, int... pages) throws Exception {
         return baseDao.find(c, whereParams, orderBy, pages);
@@ -157,25 +149,21 @@ public class BaseServiceImpl<T extends Serializable> implements BaseService<T> {
      *            统计对象
      * @return BigInteger
      */
-    @Override
     public BigInteger count(Class<T> c) throws Exception {
         return baseDao.count(c, null);
     }
 
-    @Override
     public Map<String, Object> find(Class<T> c, String whereSql,
                                     Map<String, Object> whereParams, String orderBy, int page, int rows)
             throws Exception {
         return baseDao.find(c, whereSql, whereParams, orderBy, page, rows);
     }
 
-    @Override
     public List find(String hql, Map<String, Object> whereParams,
                      String orderBy, int page, int rows) throws Exception {
         return baseDao.find(hql,whereParams,orderBy,page,rows);
     }
 
-    @Override
     public Long count(String hql, Map<String, Object> whereParams)
             throws Exception {
         return baseDao.count(hql, whereParams);

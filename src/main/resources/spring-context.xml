@@ -6,7 +6,7 @@
 
     <context:annotation-config/>
     <!--扫描注解包-->
-    <context:component-scan base-package="com.cykj.service.web" />
+    <context:component-scan base-package="com.cykj.service" />
 
     <!-- 定义文件上传解析器 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -47,7 +47,7 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="packagesToScan">
             <list>
-                <value>com.cykj.service.model</value>
+                <value>com.cykj.service.entity</value>
             </list>
         </property>
         <property name="dataSource" ref="dataSource"></property>
