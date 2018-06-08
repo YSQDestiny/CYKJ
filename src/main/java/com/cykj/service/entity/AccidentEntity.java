@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "accident")
 public class AccidentEntity extends BaseEntity{
 
-    private int companyId;
+    private Long companyId;
     private String instructions;
     private String sitePhoto;
     private String surroundingsPhoto;
@@ -21,11 +21,11 @@ public class AccidentEntity extends BaseEntity{
 
     @Basic
     @Column(name = "company_id")
-    public int getCompanyId() {
+    public Long getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(int companyId) {
+    public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
 
@@ -40,7 +40,7 @@ public class AccidentEntity extends BaseEntity{
     }
 
     @Basic
-    @Column(name = "site_photo")
+    @Column(name = "sitePhoto",length = 30000)
     public String getSitePhoto() {
         return sitePhoto;
     }
@@ -50,7 +50,7 @@ public class AccidentEntity extends BaseEntity{
     }
 
     @Basic
-    @Column(name = "surroundings_photo")
+    @Column(name = "surroundingsPhoto",length = 30000)
     public String getSurroundingsPhoto() {
         return surroundingsPhoto;
     }

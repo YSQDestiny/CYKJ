@@ -26,6 +26,6 @@ public class CompanyServiceImpl extends BaseServiceImpl<CompanyEntity> implement
 
     @Override
     public List<CompanyEntity> getListByUniqueId(String uniqenId) {
-        return companyDao.getListByUniqenId(uniqenId);
+        return companyDao.getListByUniqueId(uniqenId);
     }
 }
