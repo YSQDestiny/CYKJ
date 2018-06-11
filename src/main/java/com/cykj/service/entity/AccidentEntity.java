@@ -2,25 +2,28 @@ package com.cykj.service.entity;
 
 import com.cykj.service.base.model.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author yangsq
- * @date 2018/6/7 9:44.
+ * @date 2018/6/11 10:44.
  */
 @Entity
-@Table(name = "accident")
+@Table(name = "accident", schema = "cykj", catalog = "")
 public class AccidentEntity extends BaseEntity{
 
     private Long companyId;
     private String instructions;
+    private String result;
     private String sitePhoto;
     private String surroundingsPhoto;
     private String type;
-    private String result;
 
     @Basic
-    @Column(name = "company_id")
+    @Column(name = "companyId")
     public Long getCompanyId() {
         return companyId;
     }
@@ -40,7 +43,17 @@ public class AccidentEntity extends BaseEntity{
     }
 
     @Basic
-    @Column(name = "sitePhoto",length = 30000)
+    @Column(name = "result")
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    @Basic
+    @Column(name = "sitePhoto")
     public String getSitePhoto() {
         return sitePhoto;
     }
@@ -50,7 +63,7 @@ public class AccidentEntity extends BaseEntity{
     }
 
     @Basic
-    @Column(name = "surroundingsPhoto",length = 30000)
+    @Column(name = "surroundingsPhoto")
     public String getSurroundingsPhoto() {
         return surroundingsPhoto;
     }
@@ -68,16 +81,5 @@ public class AccidentEntity extends BaseEntity{
     public void setType(String type) {
         this.type = type;
     }
-
-    @Basic
-    @Column(name = "result")
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
 
 }

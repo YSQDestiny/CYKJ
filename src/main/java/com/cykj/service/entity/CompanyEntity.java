@@ -26,6 +26,10 @@ public class CompanyEntity extends BaseEntity {
     private Date makeTime;
     private String uniqueId;
     private String industry;
+    private String businessPhoto;
+    private String industryPhoto;
+    private String systemPhoto;
+
 
     @Basic
     @Column(name = "name")
@@ -131,5 +135,29 @@ public class CompanyEntity extends BaseEntity {
 
     public void setIndustry(String industry) {
         this.industry = industry;
+    }
+
+    public String getBusinessPhoto() {
+        return businessPhoto;
+    }
+
+    public void setBusinessPhoto(String businessPhoto) {
+        this.businessPhoto = businessPhoto;
+    }
+
+    public String getIndustryPhoto() {
+        return industryPhoto;
+    }
+
+    public void setIndustryPhoto(String industryPhoto) {
+        this.industryPhoto = industryPhoto;
+    }
+
+    public String getSystemPhoto() {
+        return systemPhoto;
+    }
+
+    public void setSystemPhoto(String systemPhoto) {
+        this.systemPhoto = systemPhoto;
     }
 }

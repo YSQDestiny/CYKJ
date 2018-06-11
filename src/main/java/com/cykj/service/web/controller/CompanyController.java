@@ -113,4 +113,52 @@ public class CompanyController {
 
         return JSONObject.toJSONString(resultMap);
     }
+
+    @RequestMapping(value = "/uploadPhoto",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
+    private @ResponseBody String postPhoto(String companyId,String businessPhoto,String industryPhoto,String systemPhoto) throws Exception {
+        Map<String,Object> resultMap = new HashMap<>();
+        CompanyEntity companyEntity = null;
+        if (companyId != null){
+            companyEntity  = companyService.getById(CompanyEntity.class,Long.parseLong(companyId));
+        }else {
+            resultMap.put("code",Constants.RESULT_CODE_FAIL);
+            resultMap.put("message","");
+            resultMap.put("data","");
+            return JSONObject.toJSONString(resultMap);
+        }
+
+        if (!StringUtils.isEmpty(businessPhoto)){
+            companyEntity.setBusinessPhoto(businessPhoto);
+        }else{
+            resultMap.put("code",Constants.RESULT_CODE_FAIL);
+            resultMap.put("message","");
+            resultMap.put("data","");
+            return JSONObject.toJSONString(resultMap);
+        }
+
+        if (!StringUtils.isEmpty(industryPhoto)){
+            companyEntity.setIndustryPhoto(industryPhoto);
+        }else {
+            resultMap.put("code",Constants.RESULT_CODE_FAIL);
+            resultMap.put("message","");
+            resultMap.put("data","");
+            return JSONObject.toJSONString(resultMap);
+        }
+
+        if (!StringUtils.isEmpty(systemPhoto)){
+            companyEntity.setSystemPhoto(systemPhoto);
+        }else {
+            resultMap.put("code",Constants.RESULT_CODE_FAIL);
+            resultMap.put("message","");
+            resultMap.put("data","");
+            return JSONObject.toJSONString(resultMap);
+        }
+
+        companyService.update(companyEntity);
+
+        resultMap.put("code",Constants.RESULT_CODE_SUCCESS);
+        resultMap.put("message","");
+        resultMap.put("data","");
+        return JSONObject.toJSONString(resultMap);
+    }
 }

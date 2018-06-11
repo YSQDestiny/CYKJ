@@ -13,16 +13,28 @@ public class SystemListener implements ServletContextListener {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SystemListener.class);
 
-    @Override
-    public void contextInitialized(ServletContextEvent servletContextEvent) {
-
+    /**
+     * Default constructor.
+     */
+    public SystemListener() {
+        // TODO Auto-generated constructor stub
     }
 
+    /**
+     * @see ServletContextListener#contextDestroyed(ServletContextEvent)
+     */
     @Override
-    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+    public void contextDestroyed(ServletContextEvent arg0) {
+        // TODO Auto-generated method stub
+    }
+
+    /**
+     * @see ServletContextListener#contextInitialized(ServletContextEvent)
+     */
+    @Override
+    public void contextInitialized(ServletContextEvent arg0) {
         System.err.println("系统初始化开始！");
         try {
-
             System.out.println("single dog,single dog,single all the day!");
         } catch (Throwable e) {
             e.printStackTrace();
