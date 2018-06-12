@@ -2,9 +2,15 @@ package com.cykj.service.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cykj.service.base.util.DateUtil;
+import com.cykj.service.entity.AccidentEntity;
 import com.cykj.service.entity.CompanyEntity;
+import com.cykj.service.entity.Record;
+import com.cykj.service.model.CompanyModel;
+import com.cykj.service.model.RecordModel;
 import com.cykj.service.web.Constants;
+import com.cykj.service.web.service.AccidentService;
 import com.cykj.service.web.service.CompanyService;
+import com.cykj.service.web.service.RecordService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +34,10 @@ public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private RecordService recordService;
+    @Autowired
+    private AccidentService accidentService;
 
     @RequestMapping("/test")
     private String test(Model model){
@@ -43,10 +53,6 @@ public class CompanyController {
         company.setWokerSpecial(2);
         company.setMakeTime(DateUtil.parseToSQLDate(date,DateUtil.yyyyMMddHHmmss));
 
-        Long id = companyService.saveAndGetId(company);
-
-        model.addAttribute("id",id);
-
         return "test";
     }
 
@@ -54,9 +60,13 @@ public class CompanyController {
     private @ResponseBody String postAndReturnId(String json){
         Map<String,Object> resultMap = new HashMap<>();
         if (!StringUtils.isEmpty(json)){
-            CompanyEntity company = JSONObject.parseObject(json,CompanyEntity.class);
+            CompanyModel company = JSONObject.parseObject(json,CompanyModel.class);
             if (company != null){
                 Long id = companyService.saveAndGetId(company);
+                if (company.getRecords() != null || company.getRecords().size() > 0){
+                    List<Record> recordModels = company.getRecords();
+                    recordService.saveModelList(recordModels,id);
+                }
                 resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
                 resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
                 resultMap.put("data",id);
@@ -159,6 +169,25 @@ public class CompanyController {
         resultMap.put("code",Constants.RESULT_CODE_SUCCESS);
         resultMap.put("message","");
         resultMap.put("data","");
+        return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping(value = "/getData",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
+    private @ResponseBody String getDataById(String id) throws Exception {
+        Map<String,Object> resultMap = new HashMap<>();
+
+        if (!StringUtils.isEmpty(id)){
+            CompanyEntity companyEntity = companyService.getById(CompanyEntity.class,Long.parseLong(id));
+            CompanyModel companyModel = new CompanyModel();
+            companyModel.setCompanyEntity(companyEntity);
+            List<AccidentEntity> accidents = accidentService.findAccidentByCompanyId(Long.parseLong(id));
+            List<Record> records = recordService.findRecordByCompanyId(Long.parseLong(id));
+            companyModel.setRecords(records);
+            companyModel.setAccidents(accidents);
+            resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+            resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+            resultMap.put("data",companyModel);
+        }
         return JSONObject.toJSONString(resultMap);
     }
 }

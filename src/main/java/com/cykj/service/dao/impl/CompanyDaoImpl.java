@@ -3,6 +3,7 @@ package com.cykj.service.dao.impl;
 import com.cykj.service.base.dao.impl.BaseDaoImpl;
 import com.cykj.service.dao.CompanyDao;
 import com.cykj.service.entity.CompanyEntity;
+import com.cykj.service.model.CompanyModel;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +18,8 @@ import java.util.List;
 public class CompanyDaoImpl extends BaseDaoImpl<CompanyEntity> implements CompanyDao {
 
     @Override
-    public Long saveAndGetId(CompanyEntity companyEntity) {
+    public Long saveAndGetId(CompanyModel companyModel) {
+        CompanyEntity companyEntity = companyModel.getCompanyEntity();
         getCurrentSession().save(companyEntity);
         return companyEntity.getId();
     }

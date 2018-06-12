@@ -2,6 +2,7 @@ package com.cykj.service.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cykj.service.entity.AccidentEntity;
+import com.cykj.service.model.CompanyModel;
 import com.cykj.service.web.Constants;
 import com.cykj.service.web.service.AccidentService;
 import org.apache.commons.lang3.StringUtils;

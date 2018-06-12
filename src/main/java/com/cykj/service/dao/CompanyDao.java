@@ -2,6 +2,7 @@ package com.cykj.service.dao;
 
 import com.cykj.service.base.dao.BaseDao;
 import com.cykj.service.entity.CompanyEntity;
+import com.cykj.service.model.CompanyModel;
 
 import java.util.List;
 
@@ -13,10 +14,10 @@ public interface CompanyDao extends BaseDao<CompanyEntity>{
 
     /**
      * 插入数据并返回ID
-     * @param companyEntity
+     * @param CompanyModel
      * @return
      */
-    Long saveAndGetId(CompanyEntity companyEntity);
+    Long saveAndGetId(CompanyModel companyModel);
 
     /**
      * 获取列表

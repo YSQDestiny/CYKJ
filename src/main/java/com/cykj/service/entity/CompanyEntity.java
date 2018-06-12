@@ -22,6 +22,15 @@ public class CompanyEntity extends BaseEntity {
     private String safe;
     private Integer wokerNormal;
     private Integer wokerSpecial;
+    //固定资产
+    private Integer assets;
+    //年营业额
+    private Integer amount;
+    //投保范围
+    private String coverage;
+    //投保险种
+    private String insurance;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date makeTime;
     private String uniqueId;
@@ -159,5 +168,37 @@ public class CompanyEntity extends BaseEntity {
 
     public void setSystemPhoto(String systemPhoto) {
         this.systemPhoto = systemPhoto;
+    }
+
+    public Integer getAssets() {
+        return assets;
+    }
+
+    public void setAssets(Integer assets) {
+        this.assets = assets;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getCoverage() {
+        return coverage;
+    }
+
+    public void setCoverage(String coverage) {
+        this.coverage = coverage;
+    }
+
+    public String getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(String insurance) {
+        this.insurance = insurance;
     }
 }
