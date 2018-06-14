@@ -2,6 +2,7 @@ package com.cykj.service.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cykj.service.base.util.DateUtil;
+import com.cykj.service.base.util.WordUtils;
 import com.cykj.service.entity.AccidentEntity;
 import com.cykj.service.entity.CompanyEntity;
 import com.cykj.service.entity.Record;
@@ -19,10 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 /**
  * @author yangsq
@@ -189,5 +189,36 @@ public class CompanyController {
             resultMap.put("data",companyModel);
         }
         return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping("/exportDoc")
+    public @ResponseBody void exportDoc(Long id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (id != null){
+            CompanyEntity companyEntity = companyService.getById(CompanyEntity.class,id);
+            Map<String,Object> map = new HashMap<>();
+            map.put("companyName",companyEntity.getName());
+            map.put("companyAddr",companyEntity.getAddr());
+            map.put("industry",companyEntity.getIndustry());
+            map.put("makeTime",DateUtil.parseToString(companyEntity.getMakeTime(),DateUtil.yyyyMMdd));
+            List<Record> records = recordService.findRecordByCompanyId(id);
+            map.put("recSize",records.size());
+
+            List<AccidentEntity> accidentList = accidentService.findAccidentByCompanyId(id);
+//            AccidentEntity accident = accidentList.get(0);
+//            map.put("instructions",accident.getInstructions());
+//            map.put("type",accident.getType());
+//            map.put("image",accident.getSitePhoto());
+
+            List<Map<String,Object>> accidents = new ArrayList<>();
+            for (AccidentEntity accident : accidentList){
+                Map<String,Object> tempmap = new HashMap<>();
+                tempmap.put("instructions",accident.getInstructions());
+                tempmap.put("type",accident.getType());
+                tempmap.put("sitePhoto",accident.getSitePhoto());
+                accidents.add(tempmap);
+            }
+            map.put("accidents",accidents);
+            WordUtils.exportMillCertificateWord(request,response,map,companyEntity.getName(),"template.ftl");
+        }
     }
 }
