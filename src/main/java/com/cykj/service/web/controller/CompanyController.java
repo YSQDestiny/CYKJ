@@ -63,8 +63,8 @@ public class CompanyController {
             CompanyModel company = JSONObject.parseObject(json,CompanyModel.class);
             if (company != null){
                 Long id = companyService.saveAndGetId(company);
-                if (company.getRecords() != null || company.getRecords().size() > 0){
-                    List<Record> recordModels = company.getRecords();
+                List<Record> recordModels = company.getRecords();
+                if (recordModels != null && recordModels.size() > 0){
                     recordService.saveModelList(recordModels,id);
                 }
                 resultMap.put("code", Constants.RESULT_CODE_SUCCESS);

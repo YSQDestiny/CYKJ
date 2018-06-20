@@ -254,6 +254,11 @@
       <artifactId>shiro-spring</artifactId>
       <version>${shiroVersion}</version>
     </dependency>
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>2.3.25-incubating</version>
+    </dependency>
   </dependencies>
 
   <build>
