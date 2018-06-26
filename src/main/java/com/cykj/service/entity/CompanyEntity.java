@@ -14,14 +14,34 @@ import java.util.Date;
 @Table(name = "company")
 public class CompanyEntity extends BaseEntity {
 
+    //企业名称
     private String name;
+    //企业编码
+    private String companyCode;
+    //详细地址
     private String addr;
+    //联系人
     private String linkman;
+    //联系电话
+    private String phoneNumber;
+    //总经理
     private String manager;
+    //副总经理
     private String viceManager;
+    //安全负责人
     private String safe;
+    //普通工人
     private Integer wokerNormal;
+    //特殊工人
     private Integer wokerSpecial;
+    //省
+    private String province;
+    //市
+    private String city;
+    //县
+    private String county;
+    //镇
+    private String town;
     //固定资产
     private Integer assets;
     //年营业额
@@ -30,15 +50,20 @@ public class CompanyEntity extends BaseEntity {
     private String coverage;
     //投保险种
     private String insurance;
-
+    //时间
     @Temporal(TemporalType.TIMESTAMP)
     private Date makeTime;
+    //设备识别码
     private String uniqueId;
+    //行业
     private String industry;
     private String businessPhoto;
     private String industryPhoto;
     private String systemPhoto;
-
+    //其他
+    private String other;
+    //委托方
+    private String client;
 
     @Basic
     @Column(name = "name")
@@ -200,5 +225,69 @@ public class CompanyEntity extends BaseEntity {
 
     public void setInsurance(String insurance) {
         this.insurance = insurance;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phontNumber) {
+        this.phoneNumber = phontNumber;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
     }
 }
