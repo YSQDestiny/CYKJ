@@ -7,7 +7,6 @@ import com.cykj.service.entity.AccidentEntity;
 import com.cykj.service.entity.CompanyEntity;
 import com.cykj.service.entity.Record;
 import com.cykj.service.model.CompanyModel;
-import com.cykj.service.model.RecordModel;
 import com.cykj.service.web.Constants;
 import com.cykj.service.web.service.AccidentService;
 import com.cykj.service.web.service.CompanyService;

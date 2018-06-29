@@ -3,77 +3,45 @@ package com.cykj.service.entity;
 import com.cykj.service.base.model.BaseEntity;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
  * @author yangsq
- * @date 2018/6/7 9:44.
+ * @date 2018/6/29 9:20.
  */
 @Entity
-@Table(name = "company")
+@Table(name = "company", schema = "cykj", catalog = "")
 public class CompanyEntity extends BaseEntity {
-
-    //企业名称
-    private String name;
-    //企业编码
-    private String companyCode;
-    //详细地址
     private String addr;
-    //联系人
+    private String industry;
     private String linkman;
-    //联系电话
-    private String phoneNumber;
-    //总经理
-    private String manager;
-    //副总经理
-    private String viceManager;
-    //安全负责人
-    private String safe;
-    //普通工人
-    private Integer wokerNormal;
-    //特殊工人
-    private Integer wokerSpecial;
-    //省
-    private String province;
-    //市
-    private String city;
-    //县
-    private String county;
-    //镇
-    private String town;
-    //固定资产
-    private Integer assets;
-    //年营业额
-    private Integer amount;
-    //投保范围
-    private String coverage;
-    //投保险种
-    private String insurance;
-    //时间
     @Temporal(TemporalType.TIMESTAMP)
     private Date makeTime;
-    //设备识别码
+    private String manager;
+    private String name;
+    private String safe;
     private String uniqueId;
-    //行业
-    private String industry;
+    private String viceManager;
+    private Integer wokerNormal;
+    private Integer wokerSpecial;
     private String businessPhoto;
     private String industryPhoto;
     private String systemPhoto;
-    //其他
+    private Integer amount;
+    private Integer assets;
+    private String coverage;
+    private String insurance;
+    private String city;
+    private String county;
+    private String province;
+    private String companyCode;
     private String other;
-    //委托方
+    private String phoneNumber;
+    private String town;
     private String client;
-
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String clientContact;
+    private String clientContactPhone;
 
     @Basic
     @Column(name = "addr")
@@ -83,6 +51,16 @@ public class CompanyEntity extends BaseEntity {
 
     public void setAddr(String addr) {
         this.addr = addr;
+    }
+
+    @Basic
+    @Column(name = "industry")
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
     }
 
     @Basic
@@ -96,6 +74,16 @@ public class CompanyEntity extends BaseEntity {
     }
 
     @Basic
+    @Column(name = "makeTime")
+    public Date getMakeTime() {
+        return makeTime;
+    }
+
+    public void setMakeTime(Date makeTime) {
+        this.makeTime = makeTime;
+    }
+
+    @Basic
     @Column(name = "manager")
     public String getManager() {
         return manager;
@@ -106,13 +94,13 @@ public class CompanyEntity extends BaseEntity {
     }
 
     @Basic
-    @Column(name = "vice_manager")
-    public String getViceManager() {
-        return viceManager;
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setViceManager(String viceManager) {
-        this.viceManager = viceManager;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
@@ -126,7 +114,27 @@ public class CompanyEntity extends BaseEntity {
     }
 
     @Basic
-    @Column(name = "woker_normal")
+    @Column(name = "uniqueId")
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    @Basic
+    @Column(name = "viceManager")
+    public String getViceManager() {
+        return viceManager;
+    }
+
+    public void setViceManager(String viceManager) {
+        this.viceManager = viceManager;
+    }
+
+    @Basic
+    @Column(name = "wokerNormal")
     public Integer getWokerNormal() {
         return wokerNormal;
     }
@@ -136,7 +144,7 @@ public class CompanyEntity extends BaseEntity {
     }
 
     @Basic
-    @Column(name = "woker_special")
+    @Column(name = "wokerSpecial")
     public Integer getWokerSpecial() {
         return wokerSpecial;
     }
@@ -146,31 +154,7 @@ public class CompanyEntity extends BaseEntity {
     }
 
     @Basic
-    @Column(name = "makeTime")
-    public Date getMakeTime() {
-        return makeTime;
-    }
-
-    public void setMakeTime(Date makeTime) {
-        this.makeTime = makeTime;
-    }
-
-    public String getUniqueId() {
-        return uniqueId;
-    }
-
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    public String getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(String industry) {
-        this.industry = industry;
-    }
-
+    @Column(name = "businessPhoto")
     public String getBusinessPhoto() {
         return businessPhoto;
     }
@@ -179,6 +163,8 @@ public class CompanyEntity extends BaseEntity {
         this.businessPhoto = businessPhoto;
     }
 
+    @Basic
+    @Column(name = "industryPhoto")
     public String getIndustryPhoto() {
         return industryPhoto;
     }
@@ -187,6 +173,8 @@ public class CompanyEntity extends BaseEntity {
         this.industryPhoto = industryPhoto;
     }
 
+    @Basic
+    @Column(name = "systemPhoto")
     public String getSystemPhoto() {
         return systemPhoto;
     }
@@ -195,14 +183,8 @@ public class CompanyEntity extends BaseEntity {
         this.systemPhoto = systemPhoto;
     }
 
-    public Integer getAssets() {
-        return assets;
-    }
-
-    public void setAssets(Integer assets) {
-        this.assets = assets;
-    }
-
+    @Basic
+    @Column(name = "amount")
     public Integer getAmount() {
         return amount;
     }
@@ -211,6 +193,18 @@ public class CompanyEntity extends BaseEntity {
         this.amount = amount;
     }
 
+    @Basic
+    @Column(name = "assets")
+    public Integer getAssets() {
+        return assets;
+    }
+
+    public void setAssets(Integer assets) {
+        this.assets = assets;
+    }
+
+    @Basic
+    @Column(name = "coverage")
     public String getCoverage() {
         return coverage;
     }
@@ -219,6 +213,8 @@ public class CompanyEntity extends BaseEntity {
         this.coverage = coverage;
     }
 
+    @Basic
+    @Column(name = "insurance")
     public String getInsurance() {
         return insurance;
     }
@@ -227,14 +223,8 @@ public class CompanyEntity extends BaseEntity {
         this.insurance = insurance;
     }
 
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
+    @Basic
+    @Column(name = "city")
     public String getCity() {
         return city;
     }
@@ -243,6 +233,8 @@ public class CompanyEntity extends BaseEntity {
         this.city = city;
     }
 
+    @Basic
+    @Column(name = "county")
     public String getCounty() {
         return county;
     }
@@ -251,14 +243,18 @@ public class CompanyEntity extends BaseEntity {
         this.county = county;
     }
 
-    public String getTown() {
-        return town;
+    @Basic
+    @Column(name = "province")
+    public String getProvince() {
+        return province;
     }
 
-    public void setTown(String town) {
-        this.town = town;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
+    @Basic
+    @Column(name = "companyCode")
     public String getCompanyCode() {
         return companyCode;
     }
@@ -267,14 +263,8 @@ public class CompanyEntity extends BaseEntity {
         this.companyCode = companyCode;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phontNumber) {
-        this.phoneNumber = phontNumber;
-    }
-
+    @Basic
+    @Column(name = "other")
     public String getOther() {
         return other;
     }
@@ -283,11 +273,129 @@ public class CompanyEntity extends BaseEntity {
         this.other = other;
     }
 
+    @Basic
+    @Column(name = "phoneNumber")
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Basic
+    @Column(name = "town")
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    @Basic
+    @Column(name = "client")
     public String getClient() {
         return client;
     }
 
     public void setClient(String client) {
         this.client = client;
+    }
+
+    @Basic
+    @Column(name = "client_contact")
+    public String getClientContact() {
+        return clientContact;
+    }
+
+    public void setClientContact(String clientContact) {
+        this.clientContact = clientContact;
+    }
+
+    @Basic
+    @Column(name = "client_contact_phone")
+    public String getClientContactPhone() {
+        return clientContactPhone;
+    }
+
+    public void setClientContactPhone(String clientContactPhone) {
+        this.clientContactPhone = clientContactPhone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()){ return false;}
+
+        CompanyEntity that = (CompanyEntity) o;
+
+        if (addr != null ? !addr.equals(that.addr) : that.addr != null){ return false;}
+        if (industry != null ? !industry.equals(that.industry) : that.industry != null){ return false;}
+        if (linkman != null ? !linkman.equals(that.linkman) : that.linkman != null){ return false;}
+        if (makeTime != null ? !makeTime.equals(that.makeTime) : that.makeTime != null){ return false;}
+        if (manager != null ? !manager.equals(that.manager) : that.manager != null){ return false;}
+        if (name != null ? !name.equals(that.name) : that.name != null){ return false;}
+        if (safe != null ? !safe.equals(that.safe) : that.safe != null){ return false;}
+        if (uniqueId != null ? !uniqueId.equals(that.uniqueId) : that.uniqueId != null){ return false;}
+        if (viceManager != null ? !viceManager.equals(that.viceManager) : that.viceManager != null){ return false;}
+        if (wokerNormal != null ? !wokerNormal.equals(that.wokerNormal) : that.wokerNormal != null){ return false;}
+        if (wokerSpecial != null ? !wokerSpecial.equals(that.wokerSpecial) : that.wokerSpecial != null){ return false;}
+        if (businessPhoto != null ? !businessPhoto.equals(that.businessPhoto) : that.businessPhoto != null)
+        { return false;}
+        if (industryPhoto != null ? !industryPhoto.equals(that.industryPhoto) : that.industryPhoto != null)
+        { return false;}
+        if (systemPhoto != null ? !systemPhoto.equals(that.systemPhoto) : that.systemPhoto != null){ return false;}
+        if (amount != null ? !amount.equals(that.amount) : that.amount != null){ return false;}
+        if (assets != null ? !assets.equals(that.assets) : that.assets != null) { return false;}
+        if (coverage != null ? !coverage.equals(that.coverage) : that.coverage != null){ return false;}
+        if (insurance != null ? !insurance.equals(that.insurance) : that.insurance != null) { return false;}
+        if (city != null ? !city.equals(that.city) : that.city != null) { return false;}
+        if (county != null ? !county.equals(that.county) : that.county != null) { return false;}
+        if (province != null ? !province.equals(that.province) : that.province != null) { return false;}
+        if (companyCode != null ? !companyCode.equals(that.companyCode) : that.companyCode != null) { return false;}
+        if (other != null ? !other.equals(that.other) : that.other != null) { return false;}
+        if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) { return false;}
+        if (town != null ? !town.equals(that.town) : that.town != null) { return false;}
+        if (client != null ? !client.equals(that.client) : that.client != null) { return false;}
+        if (clientContact != null ? !clientContact.equals(that.clientContact) : that.clientContact != null)
+        { return false;}
+        if (clientContactPhone != null ? !clientContactPhone.equals(that.clientContactPhone) : that.clientContactPhone != null)
+        { return false;}
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = addr != null ? addr.hashCode() : 0;
+        result = 31 * result + (industry != null ? industry.hashCode() : 0);
+        result = 31 * result + (linkman != null ? linkman.hashCode() : 0);
+        result = 31 * result + (makeTime != null ? makeTime.hashCode() : 0);
+        result = 31 * result + (manager != null ? manager.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (safe != null ? safe.hashCode() : 0);
+        result = 31 * result + (uniqueId != null ? uniqueId.hashCode() : 0);
+        result = 31 * result + (viceManager != null ? viceManager.hashCode() : 0);
+        result = 31 * result + (wokerNormal != null ? wokerNormal.hashCode() : 0);
+        result = 31 * result + (wokerSpecial != null ? wokerSpecial.hashCode() : 0);
+        result = 31 * result + (businessPhoto != null ? businessPhoto.hashCode() : 0);
+        result = 31 * result + (industryPhoto != null ? industryPhoto.hashCode() : 0);
+        result = 31 * result + (systemPhoto != null ? systemPhoto.hashCode() : 0);
+        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + (assets != null ? assets.hashCode() : 0);
+        result = 31 * result + (coverage != null ? coverage.hashCode() : 0);
+        result = 31 * result + (insurance != null ? insurance.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (county != null ? county.hashCode() : 0);
+        result = 31 * result + (province != null ? province.hashCode() : 0);
+        result = 31 * result + (companyCode != null ? companyCode.hashCode() : 0);
+        result = 31 * result + (other != null ? other.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (town != null ? town.hashCode() : 0);
+        result = 31 * result + (client != null ? client.hashCode() : 0);
+        result = 31 * result + (clientContact != null ? clientContact.hashCode() : 0);
+        result = 31 * result + (clientContactPhone != null ? clientContactPhone.hashCode() : 0);
+        return result;
     }
 }
