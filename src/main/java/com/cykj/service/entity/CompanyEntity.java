@@ -42,6 +42,8 @@ public class CompanyEntity extends BaseEntity {
     private String client;
     private String clientContact;
     private String clientContactPhone;
+    private String weatherStr;
+    private String geologyStr;
 
     @Basic
     @Column(name = "addr")
@@ -321,6 +323,22 @@ public class CompanyEntity extends BaseEntity {
 
     public void setClientContactPhone(String clientContactPhone) {
         this.clientContactPhone = clientContactPhone;
+    }
+
+    public String getWeatherStr() {
+        return weatherStr;
+    }
+
+    public void setWeatherStr(String weatherStr) {
+        this.weatherStr = weatherStr;
+    }
+
+    public String getGeologyStr() {
+        return geologyStr;
+    }
+
+    public void setGeologyStr(String geologyStr) {
+        this.geologyStr = geologyStr;
     }
 
     @Override

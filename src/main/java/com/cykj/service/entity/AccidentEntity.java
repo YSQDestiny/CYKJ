@@ -39,6 +39,8 @@ public class AccidentEntity extends BaseEntity{
     //整改建议
     private String suggestion;
 
+    private String name;
+
     @Basic
     @Column(name = "companyId")
     public Long getCompanyId() {
@@ -137,6 +139,14 @@ public class AccidentEntity extends BaseEntity{
 
     public void setMakeTime(Date makeTime) {
         this.makeTime = makeTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSuggestion() {

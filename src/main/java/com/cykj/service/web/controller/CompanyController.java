@@ -1,6 +1,7 @@
 package com.cykj.service.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cykj.service.base.util.Base64Img;
 import com.cykj.service.base.util.DateUtil;
 import com.cykj.service.base.util.WordUtils;
 import com.cykj.service.entity.AccidentEntity;
@@ -39,18 +40,7 @@ public class CompanyController {
     private AccidentService accidentService;
 
     @RequestMapping("/test")
-    private String test(Model model){
-        Date date = new Date();
-        CompanyEntity company = new CompanyEntity();
-        company.setName("测试一号");
-        company.setAddr("测试地址");
-        company.setLinkman("测试联系人");
-        company.setManager("测试总经理");
-        company.setViceManager("测试副总经理");
-        company.setSafe("测试安全负责人");
-        company.setWokerNormal(1);
-        company.setWokerSpecial(2);
-        company.setMakeTime(DateUtil.parseToSQLDate(date,DateUtil.yyyyMMddHHmmss));
+    private String test(){
 
         return "test";
     }
@@ -171,6 +161,45 @@ public class CompanyController {
         return JSONObject.toJSONString(resultMap);
     }
 
+    @RequestMapping(value = "/postStr",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
+    private @ResponseBody String postStr(String companyId,String weatherStr,String geologyStr) throws Exception {
+        Map<String,Object> resultMap = new HashMap<>();
+        CompanyEntity companyEntity = null;
+        if (companyId != null){
+            companyEntity  = companyService.getById(CompanyEntity.class,Long.parseLong(companyId));
+        }else {
+            resultMap.put("code",Constants.RESULT_CODE_FAIL);
+            resultMap.put("message","");
+            resultMap.put("data","");
+            return JSONObject.toJSONString(resultMap);
+        }
+
+        if (!StringUtils.isEmpty(weatherStr)){
+            companyEntity.setWeatherStr(weatherStr);
+        }else {
+            resultMap.put("code",Constants.RESULT_CODE_FAIL);
+            resultMap.put("message","");
+            resultMap.put("data","");
+            return JSONObject.toJSONString(resultMap);
+        }
+
+        if (!StringUtils.isEmpty(geologyStr)){
+            companyEntity.setGeologyStr(geologyStr);
+        }else {
+            resultMap.put("code",Constants.RESULT_CODE_FAIL);
+            resultMap.put("message","");
+            resultMap.put("data","");
+            return JSONObject.toJSONString(resultMap);
+        }
+
+        companyService.update(companyEntity);
+
+        resultMap.put("code",Constants.RESULT_CODE_SUCCESS);
+        resultMap.put("message","");
+        resultMap.put("data","");
+        return JSONObject.toJSONString(resultMap);
+    }
+
     @RequestMapping(value = "/getData",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     private @ResponseBody String getDataById(String id) throws Exception {
         Map<String,Object> resultMap = new HashMap<>();
@@ -196,28 +225,33 @@ public class CompanyController {
             CompanyEntity companyEntity = companyService.getById(CompanyEntity.class,id);
             Map<String,Object> map = new HashMap<>();
             map.put("companyName",companyEntity.getName());
-            map.put("companyAddr",companyEntity.getAddr());
+            map.put("client",companyEntity.getClient());
+            map.put("companyAddr",companyEntity.getProvince() + companyEntity.getCity() + companyEntity.getCounty() +companyEntity.getAddr());
+            map.put("companyCity",companyEntity.getCity());
             map.put("industry",companyEntity.getIndustry());
+            map.put("geologyStr",companyEntity.getGeologyStr());
+            map.put("weatherStr",companyEntity.getWeatherStr());
+            map.put("weatherPhoto",Base64Img.GetImageStrFromPath("C://chengdu.png"));
             map.put("makeTime",DateUtil.parseToString(companyEntity.getMakeTime(),DateUtil.yyyyMMdd));
             List<Record> records = recordService.findRecordByCompanyId(id);
-            map.put("recSize",records.size());
+            if (records == null){
+                map.put("recSize",0);
+            }else {
+                map.put("recSize",records.size());
+            }
 
             List<AccidentEntity> accidentList = accidentService.findAccidentByCompanyId(id);
-//            AccidentEntity accident = accidentList.get(0);
-//            map.put("instructions",accident.getInstructions());
-//            map.put("type",accident.getType());
-//            map.put("image",accident.getSitePhoto());
-
             List<Map<String,Object>> accidents = new ArrayList<>();
             for (AccidentEntity accident : accidentList){
                 Map<String,Object> tempmap = new HashMap<>();
                 tempmap.put("instructions",accident.getInstructions());
                 tempmap.put("type",accident.getType());
                 tempmap.put("sitePhoto",accident.getSitePhoto());
+                tempmap.put("level",accident.getLevel() + "，" + accident.getLevelDes());
                 accidents.add(tempmap);
             }
             map.put("accidents",accidents);
-            WordUtils.exportMillCertificateWord(request,response,map,companyEntity.getName(),"template.ftl");
+            WordUtils.exportMillCertificateWord(request,response,map,companyEntity.getName(),"templat_basic.ftl");
         }
     }
 }
