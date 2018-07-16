@@ -1,1 +1,1 @@
-<link rel="stylesheet" href="<%request.getContextPath();%>/resource/mdui-v0.4.1/css/mdui.min.css" type="text/css">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css"/>

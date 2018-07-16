@@ -1,24 +1,31 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%@include file="common_css.jsp"%>
-    <%@include file="common_js.jsp"%>
     <%@include file="include.jsp"%>
     <title>Title</title>
+    <%@include file="common_css.jsp"%>
+    <link rel="stylesheet" href="${path}static/css/github-gist.css"/>
+    <link rel="stylesheet" href="${path}static/css/railscasts.css"/>
+    <link rel="stylesheet" href="${path}static/css/docs.css"/>
+    <script type="text/javascript" async="" src="${path}static/js/analytics.js"></script>
+    <script async="" src="${path}static/js/js.js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-88818678-1');
+    </script>
 </head>
-<body>
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-loaded mdui-theme-primary-indigo mdui-theme-accent-pink">
+    <%@include file="header.jsp"%>
 
-    <div class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink mdui-loaded">
-
-        <header class="mdui-appbar mdui-appbar-fixed">
-            <div class="mdui-toolbar mdui-color-theme">
-                <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#main-drawer',swipe: true}">
-                    <i class="mdui-icon material-icons">menu</i>
-                </span>
-            </div>
-        </header>
-
-    </div>
-
+    <%@include file="theme.jsp"%>
 </body>
+<%@include file="common_js.jsp"%>
+<script src="${path}static/js/smooth-scroll.min.js"></script>
+<script src="${path}static/js/holder.min.js"></script>
+<script src="${path}static/js/highlight.pack.js"></script>
+<script>var $$ = mdui.JQ;</script>
+<script src="${path}static/js/docs.js"></script>
 </html>

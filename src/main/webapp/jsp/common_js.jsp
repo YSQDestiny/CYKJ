@@ -1,1 +1,1 @@
-<script type="text/javascript" src="<%request.getContextPath();%>/resource/mdui-v0.4.1/js/mdui.min.js"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
