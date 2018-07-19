@@ -32,61 +32,50 @@
 <%@include file="../header.jsp" %>
 
 <div class="mdui-container doc-container">
-    <table id="dg" title="My Users" class="easyui-datagrid" style="width:700px;height:250px"
-           url="get_users.php"
+    <table id="dg" title="行业" class="easyui-datagrid" style="width:100%;height:100%"
+           url="${path}industry/getAll"
            toolbar="#toolbar" pagination="true"
            rownumbers="true" fitColumns="true" singleSelect="true">
         <thead>
         <tr>
-            <th field="firstname" width="50">First Name</th>
-            <th field="lastname" width="50">Last Name</th>
-            <th field="phone" width="50">Phone</th>
-            <th field="email" width="50">Email</th>
+            <th field="id" width="50">ID</th>
+            <th field="name" width="50">行业名称</th>
+            <th field="parentId" width="50">父ID</th>
         </tr>
         </thead>
     </table>
     <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New
-            User</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit
-            User</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">添加</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
-           onclick="destroyUser()">Remove
-            User</a>
+           onclick="destroyUser()">删除</a>
     </div>
 
     <div id="dlg" class="easyui-dialog" style="width:400px"
          data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
         <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
-            <h3>User Information</h3>
+            <h3>新行业</h3>
             <div style="margin-bottom:10px">
-                <input name="firstname" class="easyui-textbox" required="true" label="First Name:" style="width:100%">
+                <input name="name" class="easyui-textbox" required="true" label="行业名称:" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
-                <input name="lastname" class="easyui-textbox" required="true" label="Last Name:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="phone" class="easyui-textbox" required="true" label="Phone:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="email" class="easyui-textbox" required="true" validType="email" label="Email:"
-                       style="width:100%">
+                <input name="parentId" class="easyui-textbox" required="true" label="父ID:" style="width:100%">
             </div>
         </form>
     </div>
     <div id="dlg-buttons">
         <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()"
-           style="width:90px">Save</a>
+           style="width:90px">保存</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-           onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+           onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
     </div>
     <script type="text/javascript">
         var url;
 
         function newUser() {
-            $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'New User');
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle', '添加行业');
             $('#fm').form('clear');
-            url = 'save_user.php';
+            url = '${path}industry/saveIndustry';
         }
 
         function editUser() {
@@ -106,14 +95,14 @@
                 },
                 success: function (result) {
                     var result = eval('(' + result + ')');
-                    if (result.errorMsg) {
-                        $.messager.show({
-                            title: 'Error',
-                            msg: result.errorMsg
-                        });
-                    } else {
+                    if (result.status) {
                         $('#dlg').dialog('close');        // close the dialog
                         $('#dg').datagrid('reload');    // reload the user data
+                    } else {
+                        $.messager.show({
+                            title: 'Error',
+                            msg: result.message
+                        });
                     }
                 }
             });

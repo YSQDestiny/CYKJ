@@ -1,6 +1,8 @@
 package com.cykj.service.dao.impl;
 
 import com.cykj.service.base.dao.impl.BaseDaoImpl;
+import com.cykj.service.base.util.DynamicDataSourceGlobal;
+import com.cykj.service.base.util.DynamicDataSourceHolder;
 import com.cykj.service.dao.CompanyDao;
 import com.cykj.service.entity.CompanyEntity;
 import com.cykj.service.model.CompanyModel;
@@ -19,6 +21,7 @@ public class CompanyDaoImpl extends BaseDaoImpl<CompanyEntity> implements Compan
 
     @Override
     public Long saveAndGetId(CompanyModel companyModel) {
+        DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CYKJ);
         CompanyEntity companyEntity = companyModel.getCompanyEntity();
         getCurrentSession().save(companyEntity);
         return companyEntity.getId();
@@ -26,6 +29,7 @@ public class CompanyDaoImpl extends BaseDaoImpl<CompanyEntity> implements Compan
 
     @Override
     public List<CompanyEntity> getListByUniqueId(String uniqueId) {
+        DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CYKJ);
         String hql = "from CompanyEntity where uniqueId = :uniqueId";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("uniqueId",uniqueId);
