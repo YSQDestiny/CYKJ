@@ -8,5 +8,6 @@ public class DynamicDataSourceGlobal {
 
     public static final String CYKJ="CYKJ";
     public static final String CSS="CSS";
+    public static final String ZHDN="ZHDN";
 
 }
