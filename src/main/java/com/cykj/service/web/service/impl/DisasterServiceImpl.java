@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("disasterService")
 public class DisasterServiceImpl extends BaseServiceImpl<Disasters> implements DisasterService {
@@ -18,5 +19,10 @@ public class DisasterServiceImpl extends BaseServiceImpl<Disasters> implements D
     @Override
     public List<Disasters> findDisastersByAddress(String address) {
         return disastersDao.findDisastersByAddress(address);
+    }
+
+    @Override
+    public Map<String, List<Disasters>> findDisastersByAddressList(List<String> addressList) {
+        return disastersDao.findDisastersByAddressList(addressList);
     }
 }

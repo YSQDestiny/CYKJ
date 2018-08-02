@@ -7,10 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * @author yangsq
+ * @date 2018/8/1 17:19.
+ */
 @Entity
 @Table(name = "disasters_sichuan", schema = "zhdn", catalog = "")
-public class Disasters extends BaseEntity{
-
+public class Disasters extends BaseEntity {
     private String address;
     private String time;
     private String pattern;

@@ -15,7 +15,7 @@ public class WeatherInfo extends BaseEntity {
 
     private String lowWeather;
 
-    private String rainFull;
+    private String rainfall;
 
     public long getProjectId() {
         return projectId;
@@ -49,11 +49,11 @@ public class WeatherInfo extends BaseEntity {
         this.lowWeather = lowWeather;
     }
 
-    public String getRainFull() {
-        return rainFull;
+    public String getRainfall() {
+        return rainfall;
     }
 
-    public void setRainFull(String rainFull) {
-        this.rainFull = rainFull;
+    public void setRainfall(String rainfall) {
+        this.rainfall = rainfall;
     }
 }
