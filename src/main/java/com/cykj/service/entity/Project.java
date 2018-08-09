@@ -35,6 +35,26 @@ public class Project extends BaseEntity {
 
     private String type;
 
+    private String score;
+
+    private String passingPost;
+
+    public String getPassingPost() {
+        return passingPost;
+    }
+
+    public void setPassingPost(String passingPost) {
+        this.passingPost = passingPost;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
     public String getName() {
         return name;
     }

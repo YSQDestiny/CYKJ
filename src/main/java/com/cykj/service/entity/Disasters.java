@@ -1,19 +1,18 @@
 package com.cykj.service.entity;
 
-import com.cykj.service.base.model.BaseEntity;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author yangsq
- * @date 2018/8/1 17:19.
+ * @date 2018/8/3 9:21.
  */
 @Entity
 @Table(name = "disasters_sichuan", schema = "zhdn", catalog = "")
-public class Disasters extends BaseEntity {
+public class Disasters implements Serializable {
+    private int id;
+    private int deleteStatus;
+    private int version;
     private String address;
     private String time;
     private String pattern;
@@ -24,6 +23,36 @@ public class Disasters extends BaseEntity {
     private String economyLoss;
     private String death;
     private String injury;
+
+    @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "deleteStatus")
+    public int getDeleteStatus() {
+        return deleteStatus;
+    }
+
+    public void setDeleteStatus(int deleteStatus) {
+        this.deleteStatus = deleteStatus;
+    }
+
+    @Basic
+    @Column(name = "version")
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     @Basic
     @Column(name = "address")
@@ -132,6 +161,9 @@ public class Disasters extends BaseEntity {
 
         Disasters that = (Disasters) o;
 
+        if (id != that.id) return false;
+        if (deleteStatus != that.deleteStatus) return false;
+        if (version != that.version) return false;
         if (address != null ? !address.equals(that.address) : that.address != null) return false;
         if (time != null ? !time.equals(that.time) : that.time != null) return false;
         if (pattern != null ? !pattern.equals(that.pattern) : that.pattern != null) return false;
@@ -148,7 +180,10 @@ public class Disasters extends BaseEntity {
 
     @Override
     public int hashCode() {
-        int result = address != null ? address.hashCode() : 0;
+        int result = id;
+        result = 31 * result + deleteStatus;
+        result = 31 * result + version;
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
         result = 31 * result + (pattern != null ? pattern.hashCode() : 0);
         result = 31 * result + (houseLoss != null ? houseLoss.hashCode() : 0);

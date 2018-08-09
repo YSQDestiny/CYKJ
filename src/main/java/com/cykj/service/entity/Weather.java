@@ -2,10 +2,11 @@ package com.cykj.service.entity;
 
 import com.cykj.service.base.model.BaseEntity;
 
-import javax.persistence.Entity;
-
-@Entity
-public class WeatherInfo extends BaseEntity {
+/**
+ * @author yangsq
+ * @date 2018/8/9 14:33.
+ */
+public class Weather extends BaseEntity {
 
     private String name;
 

@@ -34,9 +34,9 @@ public class DisastersDaoImpl extends BaseDaoImpl<Disasters> implements Disaster
         DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.ZHDN);
         Map<String ,List<Disasters>> map = new HashMap<>();
         for (String address : addressList){
-            String hql = " from Disasters where address = :address  ";
+            String hql = "from Disasters where address =:address";
             Query query = getCurrentSession().createQuery(hql);
-            query.setString("address",address + "县");
+            query.setString("address",address);
             List<Disasters> disastersList = query.list();
             if (disastersList == null || disastersList.size() == 0){
                 map.put(address,null);

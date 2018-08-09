@@ -17,26 +17,30 @@ import java.util.List;
 @Repository("weatherInfoDao")
 public class WeatherInfoDaoImpl extends BaseDaoImpl<WeatherInfo> implements WeatherInfoDao {
 
+
     @Override
-    public void saveWeatherInfos(List<WeatherInfo> weatherInfoList,Long projectId) {
+    public void saveWeatherInfos(List<WeatherInfo> weatherInfoList) {
         DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CYKJ);
         for (WeatherInfo weatherInfo : weatherInfoList){
-            weatherInfo.setProjectId(projectId);
-            getCurrentSession().save(weatherInfo);
+            WeatherInfo temp = findWeatherInfoByName(weatherInfo.getName());
+            if (temp == null){
+                getCurrentSession().save(weatherInfo);
+            }else {
+                return;
+            }
         }
-
     }
 
     @Override
-    public List<WeatherInfo> findWeatherInfoByProjectId(Long projectId) {
+    public WeatherInfo findWeatherInfoByName(String name) {
         DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CYKJ);
-        String hql = "from WeatherInfo where projectId = :projectId";
+        String hql = "from WeatherInfo where name=:name";
         Query query = getCurrentSession().createQuery(hql);
-        query.setParameter("projectId",projectId);
+        query.setParameter("name",name);
         List<WeatherInfo> weatherInfoList = query.list();
         if (weatherInfoList == null || weatherInfoList.size() == 0){
             return null;
         }
-        return weatherInfoList;
+        return weatherInfoList.get(0);
     }
 }

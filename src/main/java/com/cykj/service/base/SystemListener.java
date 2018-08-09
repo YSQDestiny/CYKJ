@@ -1,9 +1,14 @@
 package com.cykj.service.base;
 
+import com.cykj.service.crawler.CrawlerController;
+import com.cykj.service.entity.WeatherInfo;
+import com.cykj.service.web.service.WeatherInfoService;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.util.List;
 
 /**
  * @author yangsq
@@ -12,6 +17,9 @@ import javax.servlet.ServletContextListener;
 public class SystemListener implements ServletContextListener {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SystemListener.class);
+
+    @Autowired
+    WeatherInfoService weatherInfoService;
 
     /**
      * Default constructor.
@@ -36,6 +44,8 @@ public class SystemListener implements ServletContextListener {
         System.err.println("系统初始化开始！");
         try {
             System.out.println("single dog,single dog,single all the day!");
+            CrawlerController.getLocalWeatherInfo();
+            List<WeatherInfo> weatherInfoList = Constants.WEATHER_LIST;
         } catch (Throwable e) {
             e.printStackTrace();
             logger.error("System load faild!" + e.getMessage());

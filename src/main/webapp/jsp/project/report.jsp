@@ -9,11 +9,27 @@
 </head>
 <body>
 <div class="mdui-container">
+    <div class="mdui-typo">
+        <h1>项目名称：${project.name}</h1>
+        <small>创建时间：${project.makeTime}</small>
+        <ul>
+            <li>所属地区：${project.area}</li>
+            <li>工程项目部：${project.department}</li>
+            <li>项目标的：${project.project_target}</li>
+            <li>工程类型：${project.type}</li>
+            <li>项目起点：${project.start}</li>
+            <li>项目终点：${project.ending}</li>
+            <li>项目全长（KM）：${project.length}</li>
+            <li>项目评分：${project.score}</li>
+        </ul>
+        <h5>地质描述：</h5>
+        <p>${project.geological}</p>
+    </div>
 
+    <!-- 气温降水 -->
     <C:forEach items="${weatherData}" varStatus="status" var="item">
-        <p>
-            <div id="weather${status.count}" class=".mdui-col-lg-12 .mdui-col-xs-12" style="height: 400px;"></div>
-            <script type="text/javascript">
+        <div id="weather${status.count}" class=".mdui-col-lg-12 .mdui-col-xs-12" style="height: 400px;"></div>
+        <script type="text/javascript">
             var myChart = echarts.init(document.getElementById('weather${status.count}'));
 
             var option = {
@@ -88,14 +104,12 @@
             };
             myChart.setOption(option);
         </script>
-        </p>
     </C:forEach>
 
     <!-- 历史灾害 -->
     <C:forEach items="${disasterData}" varStatus="status" var="item">
-        <p>
-            <div id="disaster${status.count}" class=".mdui-col-lg-12 .mdui-col-xs-12" style="height: 400px"></div>
-            <script type="text/javascript">
+        <div id="disaster${status.count}" class=".mdui-col-lg-12 .mdui-col-xs-12" style="height: 400px"></div>
+        <script type="text/javascript">
             var myChart = echarts.init(document.getElementById('disaster${status.count}'));
             option = {
                 title: {
@@ -125,9 +139,41 @@
             };
             myChart.setOption(option);
         </script>
-        </p>
     </C:forEach>
 
+    <div class="mdui-tablep-fluid mdui-typo">
+        <h5>现场风险：</h5>
+        <table class="mdui-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>名称</th>
+                    <th>类型</th>
+                    <th>说明</th>
+                    <th>建议</th>
+                </tr>
+            </thead>
+            <tbody>
+            <C:forEach var="item" items="${projectAccidents}">
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.type}</td>
+                    <td>${item.instructions}</td>
+                    <td>${item.suggestion}</td>
+                </tr>
+            </C:forEach>
+            </tbody>
+        </table>
+    </div>
+    <div style="height: 100px">
+        <button class="mdui-btn mdui-btn-raised mdui-ripple" onclick="location.href='${path}project/downloadDoc'">生成报告</button>
+    </div>
 </div>
+<script type="text/javascript">
+    function report() {
+
+    }
+</script>
 </body>
 </html>

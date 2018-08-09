@@ -7,6 +7,7 @@
     <property name="connection.url">jdbc:mysql://localhost:3306/zhdn</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <mapping class="com.cykj.service.entity.Disasters"/>
+    <mapping class="com.cykj.service.entity.Disasters"/>
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 

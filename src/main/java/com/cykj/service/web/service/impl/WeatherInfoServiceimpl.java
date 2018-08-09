@@ -19,13 +19,14 @@ public class WeatherInfoServiceimpl extends BaseServiceImpl<WeatherInfo> impleme
     @Autowired
     private WeatherInfoDao weatherInfoDao;
 
+
     @Override
-    public void saveWeatherInfos(List<WeatherInfo> weatherInfoList, Long projectId) {
-        weatherInfoDao.saveWeatherInfos(weatherInfoList,projectId);
+    public void saveWeatherInfos(List<WeatherInfo> weatherInfoList) {
+        weatherInfoDao.saveWeatherInfos(weatherInfoList);
     }
 
     @Override
-    public List<WeatherInfo> findWeatherInfoByProjectId(Long projectId) {
-        return weatherInfoDao.findWeatherInfoByProjectId(projectId);
+    public WeatherInfo findWeatherInfoByName(String name) {
+        return weatherInfoDao.findWeatherInfoByName(name);
     }
 }

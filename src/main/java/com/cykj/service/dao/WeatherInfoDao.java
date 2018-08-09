@@ -11,8 +11,8 @@ import java.util.List;
  */
 public interface WeatherInfoDao extends BaseDao<WeatherInfo> {
 
-    void saveWeatherInfos(List<WeatherInfo> weatherInfoList,Long projectId);
+    void saveWeatherInfos(List<WeatherInfo> weatherInfoList);
 
-    List<WeatherInfo> findWeatherInfoByProjectId(Long projectId);
+    WeatherInfo findWeatherInfoByName(String name);
 
 }

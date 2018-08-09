@@ -25,7 +25,7 @@ public class Utils {
             List<String> nameList = new ArrayList<>();
             if (disastersList != null){
                 for (Disasters disasters : disastersList){
-                    if (tempMap.containsKey(disasters.getAddress())){
+                    if (tempMap.containsKey(disasters.getPattern())){
                         tempMap.put(disasters.getPattern(),tempMap.get(disasters.getPattern()) + 1);
                     }else {
                         tempMap.put(disasters.getPattern(),1);

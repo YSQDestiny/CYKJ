@@ -1,5 +1,8 @@
 package com.cykj.service.web.controller;
 
+import com.cykj.service.base.Constants;
+import com.cykj.service.web.service.WeatherInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class CyController {
 
+    @Autowired
+    WeatherInfoService weatherInfoService;
 
     @RequestMapping("/index.html")
     private String toIndex(){
+        weatherInfoService.saveWeatherInfos(Constants.WEATHER_LIST);
         return "index";
     }
 
