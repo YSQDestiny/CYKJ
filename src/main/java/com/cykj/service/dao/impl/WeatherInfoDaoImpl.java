@@ -34,7 +34,7 @@ public class WeatherInfoDaoImpl extends BaseDaoImpl<WeatherInfo> implements Weat
     @Override
     public WeatherInfo findWeatherInfoByName(String name) {
         DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CYKJ);
-        String hql = "from WeatherInfo where name=:name";
+        String hql = "from WeatherInfo where name= :name";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("name",name);
         List<WeatherInfo> weatherInfoList = query.list();

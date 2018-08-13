@@ -21,6 +21,7 @@
             <li>项目终点：${project.ending}</li>
             <li>项目全长（KM）：${project.length}</li>
             <li>项目评分：${project.score}</li>
+            <li>风险等级：${project.level}</li>
         </ul>
         <h5>地质描述：</h5>
         <p>${project.geological}</p>

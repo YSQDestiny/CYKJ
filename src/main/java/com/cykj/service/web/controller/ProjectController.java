@@ -130,6 +130,36 @@ public class ProjectController extends BaseController<Project> {
         return JSONObject.toJSONString(resultMap);
     }
 
+    @RequestMapping(value = "/postScore", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    private @ResponseBody String postScore(String projectId,String score,String level) throws Exception {
+        Map<String, Object> resultMap = new HashMap<>();
+        Project project = null;
+        if(projectId != null){
+            project = projectService.getById(Project.class, Long.parseLong(projectId));
+        }else {
+            resultMap.put("code", Constants.RESULT_CODE_FAIL);
+            resultMap.put("message", "");
+            resultMap.put("data", "");
+            return JSONObject.toJSONString(resultMap);
+        }
+        if (!StringUtils.isEmpty(score) & !StringUtils.isEmpty(level)){
+            project.setScore(score);
+            project.setLevel(level);
+        }else {
+            resultMap.put("code", Constants.RESULT_CODE_FAIL);
+            resultMap.put("message", "");
+            resultMap.put("data", "");
+            return JSONObject.toJSONString(resultMap);
+        }
+
+        projectService.update(project);
+
+        resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+        resultMap.put("message", "");
+        resultMap.put("data", "");
+        return JSONObject.toJSONString(resultMap);
+    }
+
     @RequestMapping(value = "postWeather",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     private @ResponseBody String postWeatherInfo(String projectId,String weatherStr){
         return "";
@@ -170,16 +200,22 @@ public class ProjectController extends BaseController<Project> {
 
     @RequestMapping("/showCharts")
     private String showChart(String projectId, Model model) throws Exception{
-        Project project = projectService.getById(Project.class,projectId );
+        Project project = projectService.getById(Project.class,Long.parseLong(projectId));
         String passingPoint = project.getPassingPost();
         List<String> nameList = JSONArray.parseArray(passingPoint,String.class);
         List<WeatherInfo> weatherInfoList = new ArrayList<>();
         for (String name : nameList){
             if (name.length() > 2){
                 if (name.indexOf("县") != -1){
-                    name.replace("县","");
+                    name = name.replace("县","");
                 }else if (name.indexOf("市") != -1){
-                    name.replace("市","");
+                    name = name.replace("市","");
+                }else if (name.indexOf("区") != -1){
+                    if (name.indexOf("龙泉驿") != -1){
+                        name = "龙泉驿";
+                    }else {
+                        name = "成都";
+                    }
                 }
             }
             WeatherInfo weatherInfo = weatherInfoService.findWeatherInfoByName(name);
@@ -221,11 +257,18 @@ public class ProjectController extends BaseController<Project> {
         List<String> nameList = JSONArray.parseArray(passingPoint,String.class);
         List<WeatherInfo> weatherInfoList = new ArrayList<>();
         for (String name : nameList){
+            //一出好戏
             if (name.length() > 2){
                 if (name.indexOf("县") != -1){
-                    name.replace("县","");
+                    name = name.replace("县","");
                 }else if (name.indexOf("市") != -1){
-                    name.replace("市","");
+                    name = name.replace("市","");
+                }else if (name.indexOf("区") != -1){
+                    if (name.indexOf("龙泉驿") != -1){
+                        name = "龙泉驿";
+                    }else {
+                        name = "成都";
+                    }
                 }
             }
             WeatherInfo weatherInfo = weatherInfoService.findWeatherInfoByName(name);
@@ -239,7 +282,8 @@ public class ProjectController extends BaseController<Project> {
         if (disasterModels != null || disasterModels.size() > 0){
             model.addAttribute("disasterData",disasterModels);
         }
+        List<ProjectAccident> projectAccidents = projectAccidetnService.findProjectAccidentByProjectId(project.getId());
+        model.addAttribute("projectAccidents",projectAccidents);
         return "project/report";
-
     }
 }
