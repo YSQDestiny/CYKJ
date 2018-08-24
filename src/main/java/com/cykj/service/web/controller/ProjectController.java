@@ -257,11 +257,12 @@ public class ProjectController extends BaseController<Project> {
         List<String> nameList = JSONArray.parseArray(passingPoint,String.class);
         List<WeatherInfo> weatherInfoList = new ArrayList<>();
         for (String name : nameList){
-            //一出好戏
+            //一出好戏就好高科技啊收到货
             if (name.length() > 2){
                 if (name.indexOf("县") != -1){
                     name = name.replace("县","");
                 }else if (name.indexOf("市") != -1){
+
                     name = name.replace("市","");
                 }else if (name.indexOf("区") != -1){
                     if (name.indexOf("龙泉驿") != -1){

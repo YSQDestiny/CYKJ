@@ -20,11 +20,28 @@
             <li>项目起点：${project.start}</li>
             <li>项目终点：${project.ending}</li>
             <li>项目全长（KM）：${project.length}</li>
-            <li>项目评分：${project.score}</li>
+            <li>项目评分：${project.score} <i class="mdui-icon material-icons" mdui-dialog="{target: '#exampleDialog'}">info</i></li>
             <li>风险等级：${project.level}</li>
         </ul>
         <h5>地质描述：</h5>
         <p>${project.geological}</p>
+    </div>
+
+    <div class="mdui-dialog" id="exampleDialog">
+        <div class="mdui-dialog-title">评分标准</div>
+        <div class="mdui-dialog-content mdui-typo">
+            工程施工安全总体风险大小计算公式为：R=A1+A2+A3+A4+A5+A6，其中，<br/>
+            A1指桥梁建设规模所赋分值；<br/>
+            A2指工程所处地质条件所赋分值；<br/>
+            A3指工程所处气候环境条件所赋分值；<br/>
+            A4指工程所处地形地貌所赋分值；<br/>
+            A5指桥位特征所赋分值；<br/>
+            A6指施工工艺成熟度所赋分值。<br/>
+            评估指标体系中各指标所赋分值应结合工程实际情况，综合考虑各种因素的影响程度来确定分值，数值应取整数。评估指标也可以根据工程实际进行相应的增加或删减，同时风险分级标准也须进行相应调整。
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close>关闭</button>
+        </div>
     </div>
 
     <!-- 气温降水 -->
@@ -149,6 +166,7 @@
                 <tr>
                     <th>#</th>
                     <th>名称</th>
+                    <th>风险点照片</th>
                     <th>类型</th>
                     <th>说明</th>
                     <th>建议</th>
@@ -159,6 +177,7 @@
                 <tr>
                     <td>${item.id}</td>
                     <td>${item.name}</td>
+                    <td><img style="width: 100px;height: 100px" src="data:image/png;base64,${item.sitePhoto}"/></td>
                     <td>${item.type}</td>
                     <td>${item.instructions}</td>
                     <td>${item.suggestion}</td>
@@ -167,10 +186,15 @@
             </tbody>
         </table>
     </div>
-    <div style="height: 100px">
-        <button class="mdui-btn mdui-btn-raised mdui-ripple" onclick="location.href='${path}project/downloadDoc'">生成报告</button>
+        <div class="mdui-row mdui-row-gapless">
+            <div class="mdui-col-xs-2"></div>
+            <div class="mdui-col-xs-8">
+                <button style="width: 100%" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-indigo" onclick="location.href='${path}project/downloadDoc'">生成报告</button>
+            </div>
+            <div class="mdui-col-xs-2"></div>
+        </div>
+        <div style="height: 100px"></div>
     </div>
-</div>
 <script type="text/javascript">
     function report() {
 
