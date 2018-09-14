@@ -33,8 +33,8 @@
             </div>
             <div class="mdui-collapse-item-body mdui-list">
                 <a href="${path}industry.html" class="mdui-list-item mdui-ripple ">行业</a>
-                <a href="" class="mdui-list-item mdui-ripple ">区域</a>
-                <a href="" class="mdui-list-item mdui-ripple ">查勘描述</a>
+                <a href="${path}area.html" class="mdui-list-item mdui-ripple ">区域</a>
+                <a href="${path}options.html" class="mdui-list-item mdui-ripple ">查勘选项</a>
             </div>
         </div>
     </div>

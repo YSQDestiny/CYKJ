@@ -1,17 +1,14 @@
 package com.cykj.service.dao.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cykj.service.base.Constants;
 import com.cykj.service.base.bean.Page;
 import com.cykj.service.base.dao.impl.BaseDaoImpl;
 import com.cykj.service.base.util.DynamicDataSourceGlobal;
 import com.cykj.service.base.util.DynamicDataSourceHolder;
-import com.cykj.service.dao.IndustryDao;
-import com.cykj.service.entity.Industry;
-import jnr.constants.Constant;
+import com.cykj.service.dao.OptionsDao;
+import com.cykj.service.entity.Options;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,16 +16,29 @@ import java.util.Map;
 
 /**
  * @author yangsq
- * @date 2018/7/18 9:31.
+ * @date 2018/9/7 10:20.
  */
-@Repository("industryDao")
-public class IndustryDaoImpl extends BaseDaoImpl<Industry> implements IndustryDao {
+@Repository("optionsDao")
+public class OptionsDaoImpl extends BaseDaoImpl<Options> implements OptionsDao {
+
 
     @Override
-    public Map<String, Object> findAllByPage(Page page) {
+    public List<Options> findAll() {
+        DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CYKJ);
+        String hql = "from Options";
+        Query query = getCurrentSession().createQuery(hql);
+        List<Options> options = query.list();
+        if (options == null || options.size() == 0){
+            return null;
+        }
+        return options;
+    }
+
+    @Override
+    public Map<String, Object> findAllbyPage(Page page) {
         DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CYKJ);
         Map<String,Object> returnMap = new HashMap<>();
-        String hql = "from Industry";
+        String hql = "from Options";
         Query query = getCurrentSession().createQuery(hql);
         returnMap.put(Constants.TOTALS,query.list().size());
         query.setProperties(null);
@@ -39,22 +49,16 @@ public class IndustryDaoImpl extends BaseDaoImpl<Industry> implements IndustryDa
     }
 
     @Override
-    public Industry findIndustryByName(String name) {
+    public List<Options> findOptionsByIndustryAndArea(String inudstry, String area) {
         DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CYKJ);
-        String hql = "from Industry where name =:name";
+        String hql = "from Options where industry = :industry and area = :area";
         Query query = getCurrentSession().createQuery(hql);
-        query.setParameter("name",name);
-        List<Industry> industries = query.list();
-        if (industries == null || industries.size() ==0){
+        query.setParameter("industry",inudstry);
+        query.setParameter("area",area);
+        List<Options> optionsList = query.list();
+        if (optionsList == null || optionsList.size() == 0){
             return null;
         }
-        return industries.get(0);
+        return optionsList;
     }
-
-    public @ResponseBody String deleteIndustry(long id){
-        Map<String,Object> returnMap = new HashMap<>();
-        
-        return JSONObject.toJSONString(returnMap);
-    }
-
 }

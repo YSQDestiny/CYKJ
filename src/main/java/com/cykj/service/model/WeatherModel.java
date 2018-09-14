@@ -20,5 +20,5 @@ public class WeatherModel {
         this.weatherInfoList = weatherInfoList;
     }
 
-
+    
 }

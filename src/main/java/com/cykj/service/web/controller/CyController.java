@@ -19,12 +19,22 @@ public class CyController {
 
     @RequestMapping("/index.html")
     private String toIndex(){
-        weatherInfoService.saveWeatherInfos(Constants.WEATHER_LIST);
+//        weatherInfoService.saveWeatherInfos(Constants.WEATHER_LIST);
         return "index";
     }
 
     @RequestMapping("/industry.html")
     private String toIndustry(){
         return "company/industry";
+    }
+
+    @RequestMapping("/area.html")
+    private String toAre(){
+        return "company/area";
+    }
+
+    @RequestMapping("/options.html")
+    private String toOptions(){
+        return "company/options";
     }
 }

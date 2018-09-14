@@ -11,5 +11,5 @@ public class Constants {
 
 
     public final static String RESULT_MESSAGE_SUCCESS = "success";
-
+    public final static String RESULT_MESSAGE_FAIL = "fail";
 }

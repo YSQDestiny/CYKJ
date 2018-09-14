@@ -44,8 +44,8 @@ public class SystemListener implements ServletContextListener {
         System.err.println("系统初始化开始！");
         try {
             System.out.println("single dog,single dog,single all the day!");
-            CrawlerController.getLocalWeatherInfo();
-            List<WeatherInfo> weatherInfoList = Constants.WEATHER_LIST;
+//            CrawlerController.getLocalWeatherInfo();
+//            List<WeatherInfo> weatherInfoList = Constants.WEATHER_LIST;
         } catch (Throwable e) {
             e.printStackTrace();
             logger.error("System load faild!" + e.getMessage());

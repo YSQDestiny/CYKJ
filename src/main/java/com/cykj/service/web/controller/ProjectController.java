@@ -257,7 +257,6 @@ public class ProjectController extends BaseController<Project> {
         List<String> nameList = JSONArray.parseArray(passingPoint,String.class);
         List<WeatherInfo> weatherInfoList = new ArrayList<>();
         for (String name : nameList){
-            //一出好戏就好高科技啊收到货
             if (name.length() > 2){
                 if (name.indexOf("县") != -1){
                     name = name.replace("县","");

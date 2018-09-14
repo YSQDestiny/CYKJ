@@ -61,4 +61,5 @@ public class IndustryController {
         }
         return JSONObject.toJSONString(returnMap);
     }
+
 }

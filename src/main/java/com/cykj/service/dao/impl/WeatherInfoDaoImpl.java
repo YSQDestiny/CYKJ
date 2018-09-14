@@ -25,8 +25,6 @@ public class WeatherInfoDaoImpl extends BaseDaoImpl<WeatherInfo> implements Weat
             WeatherInfo temp = findWeatherInfoByName(weatherInfo.getName());
             if (temp == null){
                 getCurrentSession().save(weatherInfo);
-            }else {
-                return;
             }
         }
     }
