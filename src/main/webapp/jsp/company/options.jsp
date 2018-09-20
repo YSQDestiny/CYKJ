@@ -38,7 +38,7 @@
                rownumbers="true" fitColumns="true" singleSelect="true">
             <thead>
             <tr>
-                <th field="name" width="100">查勘选项</th>
+                <th field="name" width="75">查勘选项</th>
                 <th field="area" width="50">所属区域</th>
                 <th field="industry" width="50">所属行业</th>
                 <th field="insuranceType" width="50">所属行业</th>

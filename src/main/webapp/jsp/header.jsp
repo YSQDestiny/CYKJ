@@ -35,6 +35,8 @@
                 <a href="${path}industry.html" class="mdui-list-item mdui-ripple ">行业</a>
                 <a href="${path}area.html" class="mdui-list-item mdui-ripple ">区域</a>
                 <a href="${path}options.html" class="mdui-list-item mdui-ripple ">查勘选项</a>
+                <a href="${path}property/area.html" class="mdui-list-item mdui-ripple ">物业区域</a>
+                <a href="${path}property/option.html" class="mdui-list-item mdui-ripple ">物业选项</a>
             </div>
         </div>
     </div>

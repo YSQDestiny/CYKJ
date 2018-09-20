@@ -37,4 +37,14 @@ public class CyController {
     private String toOptions(){
         return "company/options";
     }
+
+    @RequestMapping("/property/area.html")
+    private String toPropertyArea(){
+        return "property/area";
+    }
+
+    @RequestMapping("/property/option.html")
+    private String toPropertyOption(){
+        return "property/option";
+    }
 }
