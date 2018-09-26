@@ -3,12 +3,14 @@ package com.cykj.service.entity;
 import com.cykj.service.base.model.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author yangsq
  * @date 2018/9/7 10:07.
  */
 @Entity
+@Table(name = "options", schema = "cykj", catalog = "")
 public class Options extends BaseEntity {
 
     private String name;

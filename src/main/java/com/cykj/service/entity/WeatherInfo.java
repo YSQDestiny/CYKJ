@@ -3,8 +3,10 @@ package com.cykj.service.entity;
 import com.cykj.service.base.model.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "weatherinfo", schema = "cykj", catalog = "")
 public class WeatherInfo extends BaseEntity {
 
     private String name;

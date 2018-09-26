@@ -3,6 +3,7 @@ package com.cykj.service.entity;
 import com.cykj.service.base.model.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @date 2018/9/21 15:27.
  */
 @Entity
+@Table(name = "property", schema = "cykj", catalog = "")
 public class Property extends BaseEntity {
     /**
      *项目名称
