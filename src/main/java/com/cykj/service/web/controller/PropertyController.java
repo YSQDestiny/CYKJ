@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cykj.service.base.bean.Page;
 import com.cykj.service.base.util.DateUtil;
 import com.cykj.service.base.util.ExceptionUtils;
+import com.cykj.service.base.util.Utils;
 import com.cykj.service.entity.*;
 import com.cykj.service.web.Constants;
 import com.cykj.service.web.service.PropertyAccidentService;
@@ -13,6 +14,7 @@ import com.cykj.service.web.service.PropertyService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -192,5 +194,14 @@ public class PropertyController  {
             resultMap.put("data","");
         }
         return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping("/showProperty")
+    private String showPropertyReport(String propertyId, Model model) throws Exception {
+        Property property = propertyService.getById(Property.class,Long.parseLong(propertyId));
+        String str = Utils.propertyDescribe(property);
+        model.addAttribute("str",str);
+        model.addAttribute("property",property);
+        return "property/report";
     }
 }
