@@ -9,15 +9,28 @@
 </head>
 <body>
 <div class="mdui-container">
-    <div class="mdui-typo">
-        <h1>项目名称：${property.name}</h1>
-        <small>创建时间：${property.makeTime}</small>
-        <h5>项目概述：</h5>
-        <p>${str}</p>
-        <h5>设施配套：</h5>
-        <p>${equi}</p>
-        <p>${companyInfo}</p>
-        <p>${table}</p>
+    <div class="mdui-row">
+        <div class="mdui-col-xs-12">
+            <div class="mdui-typo">
+                <h1>项目名称：${property.name}</h1>
+                <small>创建时间：${property.makeTime}</small>
+                <h5>项目概述：</h5>
+                <p>${str}</p>
+                <h5>设施配套：</h5>
+                <p>${equi}</p>
+                <p>${companyInfo}</p>
+            </div>
+            <div class="mdui-tablep-fluid mdui-typo">
+                ${table}
+            </div>
+        </div>
+    </div>
+    <div class="mdui-row">
+        <div class="mdui-col-xs-2"></div>
+        <div class="mdui-col-xs-8">
+            <button style="width: 100%" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-indigo" onclick="location.href='${path}property/download?id=${property.id}'">生成报告</button>
+        </div>
+        <div class="mdui-col-xs-2"></div>
     </div>
 </div>
 </body>
