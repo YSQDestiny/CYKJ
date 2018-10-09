@@ -5,7 +5,9 @@ import com.cykj.service.base.bean.Page;
 import com.cykj.service.base.util.DateUtil;
 import com.cykj.service.base.util.ExceptionUtils;
 import com.cykj.service.base.util.Utils;
+import com.cykj.service.base.util.WordUtils;
 import com.cykj.service.entity.*;
+import com.cykj.service.model.ReportDeduction;
 import com.cykj.service.web.Constants;
 import com.cykj.service.web.service.PropertyAccidentService;
 import com.cykj.service.web.service.PropertyAreaService;
@@ -19,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.rmi.CORBA.Util;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 /**
  * @author yangsq
@@ -161,6 +163,7 @@ public class PropertyController  {
             returnMap.put("status", false);
             returnMap.put("message", ExceptionUtils.getErrorInfo(e));
         }
+
         return JSONObject.toJSONString(returnMap);
     }
 
@@ -171,7 +174,7 @@ public class PropertyController  {
         if (StringUtils.isEmpty(json)){
             resultMap.put("code", Constants.RESULT_MESSAGE_FAIL);
             resultMap.put("message",Constants.RESULT_MESSAGE_FAIL);
-            resultMap.put("data",JSONObject.toJSONString(null));
+            resultMap.put("data","");
         }else {
             property.setDeduction(json);
             propertyService.update(property);
@@ -200,8 +203,76 @@ public class PropertyController  {
     private String showPropertyReport(String propertyId, Model model) throws Exception {
         Property property = propertyService.getById(Property.class,Long.parseLong(propertyId));
         String str = Utils.propertyDescribe(property);
+        String equiStr = Utils.initEquipment(property.getEquiment());
+        String companyInfo = Utils.initCompanyinfo(property);
+        String table = Utils.initPointTable(property.getDeduction());
+        model.addAttribute("equi",equiStr);
         model.addAttribute("str",str);
+        model.addAttribute("companyInfo",companyInfo);
         model.addAttribute("property",property);
+        model.addAttribute("table",table);
         return "property/report";
+    }
+
+    @RequestMapping("/download")
+    public @ResponseBody void exportDoc(Long id, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Map<String,Object> map = new HashMap<>();
+        if (id != null){
+            Property property = propertyService.getById(Property.class,id);
+            map.put("name",property.getName());
+            map.put("companyName",property.getCompanyName());
+            map.put("time",DateUtil.parseToString(property.getMakeTime(),DateUtil.yyyyMMdd));
+            map.put("first", Utils.propertyDescribe(property));
+            map.put("equipme",Utils.initEquipment(property.getEquiment()));
+            map.put("therd",Utils.initCompanyinfo(property));
+            Map<String,Double> pointMap = Utils.calculationScore(property.getDeduction());
+            map.put("total",pointMap.get("total"));
+            map.put("missingPoint",pointMap.get("missingPoint"));
+            map.put("deduction",pointMap.get("deduction"));
+            map.put("score",pointMap.get("score"));
+            double score = pointMap.get("score");
+            String leve = "";
+            if (score < 60) {
+                leve = "差";
+            } else if (score < 75 & score >= 60  ) {
+                leve = "中";
+            } else if (score >= 75 & score < 90) {
+                leve = "良";
+            } else if (score >= 90) {
+                leve = "优";
+            }
+            map.put("leve",leve);
+            map.put("assessor"," ");
+
+            List<PropertyAccident> propertyAccidents = propertyAccidentService.findAccidentByPropertyId(id);
+            if (propertyAccidents != null){
+                List<Map<String,Object>> accidents = new ArrayList<>();
+                for (PropertyAccident accident : propertyAccidents){
+                    Map<String,Object> tempmap = new HashMap<>();
+                    tempmap.put("instructions",accident.getInstructions());
+                    tempmap.put("type",accident.getType());
+                    tempmap.put("accidentPhoto",accident.getSitePhoto());
+                    tempmap.put("levelDes",accident.getLevel() + "，" + accident.getLevelDes());
+                    accidents.add(tempmap);
+                }
+                map.put("accidents",accidents);
+            }else {
+                List<Map<String,Object>> accidents = new ArrayList<>();
+                Map<String,Object> tempmap = new HashMap<>();
+                tempmap.put("instructions","");
+                tempmap.put("type","");
+                tempmap.put("accidentPhoto","");
+                tempmap.put("levelDes","");
+                accidents.add(tempmap);
+                map.put("accidents",accidents);
+            }
+            List<ReportDeduction> reportDeductions = Utils.initPropertyReportDeduction(property.getDeduction());
+            for (ReportDeduction reportDeduction : reportDeductions){
+                map.put(reportDeduction.getResonName(),reportDeduction.getReson());
+                map.put(reportDeduction.getMissingName(),reportDeduction.getMissing());
+            }
+            WordUtils.exportMillCertificateWord(request,response,map,property.getName(),"property.ftl");
+        }
+
     }
 }

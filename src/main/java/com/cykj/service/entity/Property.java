@@ -123,6 +123,8 @@ public class Property extends BaseEntity {
      */
     private String deduction;
 
+    private String type;
+
     /**
      * 三张照片
      */
@@ -361,4 +363,13 @@ public class Property extends BaseEntity {
     public void setDeduction(String deduction) {
         this.deduction = deduction;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

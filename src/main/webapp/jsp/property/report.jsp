@@ -14,6 +14,10 @@
         <small>创建时间：${property.makeTime}</small>
         <h5>项目概述：</h5>
         <p>${str}</p>
+        <h5>设施配套：</h5>
+        <p>${equi}</p>
+        <p>${companyInfo}</p>
+        <p>${table}</p>
     </div>
 </div>
 </body>

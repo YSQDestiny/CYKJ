@@ -1,5 +1,7 @@
 package com.cykj.service.model;
 
+import java.util.List;
+
 /**
  * @author yangsq
  * @date 2018/9/26 14:34.
@@ -19,7 +21,17 @@ public class Deduction {
     /**
      * 扣分原因
      */
-    private String reson;
+    private List<String> reson;
+
+    /**
+     * 是否重点区域
+     */
+    private int important;
+
+    /**
+     * 总分
+     */
+    private int total;
 
     /**
      * 是否缺项
@@ -42,11 +54,11 @@ public class Deduction {
         this.area = area;
     }
 
-    public String getReson() {
+    public List<String> getReson() {
         return reson;
     }
 
-    public void setReson(String reson) {
+    public void setReson(List<String> reson) {
         this.reson = reson;
     }
 
@@ -56,5 +68,21 @@ public class Deduction {
 
     public void setMissing(boolean missing) {
         isMissing = missing;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getImportant() {
+        return important;
+    }
+
+    public void setImportant(int important) {
+        this.important = important;
     }
 }
