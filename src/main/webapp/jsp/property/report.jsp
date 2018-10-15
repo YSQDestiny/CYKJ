@@ -19,9 +19,7 @@
                 <h5>设施配套：</h5>
                 <p>${equi}</p>
                 <p>${companyInfo}</p>
-            </div>
-            <div class="mdui-tablep-fluid mdui-typo">
-                ${table}
+                <p>${table}</p>
             </div>
         </div>
     </div>
@@ -35,3 +33,6 @@
 </div>
 </body>
 </html>
+<script type="text/javascript">
+
+</script>

@@ -199,6 +199,26 @@ public class PropertyController  {
         return JSONObject.toJSONString(resultMap);
     }
 
+    @RequestMapping(value = "/getAreaAndOptions",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String getAreaAndOptions(){
+        Map<String,Object> resultMap = new HashMap<>();
+
+        List<PropertyArea> areaList = propertyAreaService.findAll();
+
+        Map<PropertyArea,List<PropertyOption>> optionsMap = new HashMap<>();
+
+        for (PropertyArea area : areaList){
+            List<PropertyOption> optionList = propertyOptionService.findOptionByArea(area.getName());
+            optionsMap.put(area,optionList);
+        }
+
+        resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+        resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+        resultMap.put("data",JSONObject.toJSONString(optionsMap));
+
+        return JSONObject.toJSONString(resultMap);
+    }
+
     @RequestMapping("/showProperty")
     private String showPropertyReport(String propertyId, Model model) throws Exception {
         Property property = propertyService.getById(Property.class,Long.parseLong(propertyId));

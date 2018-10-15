@@ -166,9 +166,9 @@ public class Utils {
         }
         result += "<table class=\"mdui-table\">\n" + "<thead>\n" + "<tr>\n" + "<th>总分</th>\n" + "<th>缺项</th>\n"
                 + "<th>扣分</th>\n" + "<th>最终得分</th>\n" + "<th>风险程度</th>\n" + "</tr>\n" + "</thead>\n" + "<tbody>\n"
-                + "<tr>\n" + "<td>" + pointMap.get("total") + "</td>" + "<td>" + pointMap.get("missingPoint") + "</td>"
-                + "<td>" + pointMap.get("deduction") + "</td>" + "<td>" + pointMap.get("score") + "</td>" + "<td>"
-                + leve + "</td>";
+                + "<tr>\n" + "<td>" + pointMap.get("total") + "</td>\n" + "<td>" + pointMap.get("missingPoint") + "</td>\n"
+                + "<td>" + pointMap.get("deduction") + "</td>\n" + "<td>" + pointMap.get("score") + "</td>\n" + "<td>"
+                + leve + "</td>\n" + "</tr>\n" + "</tbody>\n" + "</table>";
 
         return result;
     }
