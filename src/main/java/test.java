@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +12,17 @@ public class test {
 
 
     public static void main(String[] args){
-
-        List<String> list = new ArrayList<>();
-        list.add("a");
-        boolean test = false;
-        if (list != null & list.size() > 0){
-            test = true;
+        test test = new test();
+        try {
+            test.showURL();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        System.out.println(test);
     }
 
+    public void showURL() throws IOException {
+        File directory = new File("");
+        String courseFile = directory.getCanonicalPath();
+        System.out.println(courseFile);
+    }
 }
