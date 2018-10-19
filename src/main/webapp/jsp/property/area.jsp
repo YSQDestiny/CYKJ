@@ -41,6 +41,7 @@
             <th field="name" width="50">区域</th>
             <th field="singlePoint" width="50">单项分</th>
             <th field="important" width="50">重要区域</th>
+            <th field="standard" width="50">评分标准</th>
         </tr>
         </thead>
     </table>
@@ -65,6 +66,9 @@
         <div style="margin-bottom:10px">
             <input name="important" class="easyui-textbox" required="true" label="重要区域:" style="width:100%">
         </div>
+        <div style="margin-bottom:10px">
+            <input name="standard" class="easyui-textbox" required="true" label="评分标准:" style="width:100%">
+        </div>
     </form>
 </div>
 <div id="dlg-buttons">
@@ -86,9 +90,9 @@
     function editUser() {
         var row = $('#dg').datagrid('getSelected');
         if (row) {
-            $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Edit User');
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle', '编辑区域');
             $('#fm').form('load', row);
-            url = 'update_user.php?id=' + row.id;
+            url = '${path}property/editArea?id=' + row.id;
         }
     }
 
@@ -118,8 +122,8 @@
         if (row) {
             $.messager.confirm('Confirm', 'Are you sure you want to destroy this user?', function (r) {
                 if (r) {
-                    $.post('destroy_user.php', {id: row.id}, function (result) {
-                        if (result.success) {
+                    $.post('${path}property/deleteArea', {id: row.id}, function (result) {
+                        if (result.status) {
                             $('#dg').datagrid('reload');    // reload the user data
                         } else {
                             $.messager.show({    // show error message

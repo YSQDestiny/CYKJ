@@ -19,6 +19,8 @@ public class PropertyArea extends BaseEntity {
 
     private int important;
 
+    private String standard;
+
     public String getName() {
         return name;
     }
@@ -41,5 +43,13 @@ public class PropertyArea extends BaseEntity {
 
     public void setImportant(int important) {
         this.important = important;
+    }
+
+    public String getStandard() {
+        return standard;
+    }
+
+    public void setStandard(String standard) {
+        this.standard = standard;
     }
 }

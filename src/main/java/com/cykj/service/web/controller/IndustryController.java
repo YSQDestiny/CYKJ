@@ -62,4 +62,47 @@ public class IndustryController {
         return JSONObject.toJSONString(returnMap);
     }
 
+    @RequestMapping(value = "/updateIndustry",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String updateIndustry(Industry industry,Long id){
+        Map<String,Object> returnMap = new HashMap<>();
+        try {
+            Industry temp = industryService.getById(Industry.class,id);
+            if (temp == null){
+                throw new NullPointerException("数据获取失败");
+            }
+            temp.setName(industry.getName());
+            temp.setParentId(industry.getParentId());
+            industryService.update(temp);
+            returnMap.put("status",true);
+        }catch (NullPointerException e){
+            returnMap.put("status", false);
+            returnMap.put("message", e.getMessage());
+        }catch (Exception e){
+            returnMap.put("status", false);
+            returnMap.put("message", ExceptionUtils.getErrorInfo(e));
+        }
+        return JSONObject.toJSONString(returnMap);
+    }
+
+    @RequestMapping(value = "/deleteIndustry",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String deleteIndustry(Long id){
+        Map<String,Object> returnMap = new HashMap<>();
+        try {
+            Industry industry = industryService.getById(Industry.class,id);
+            if (industry == null){
+                throw new NullPointerException("数据获取失败");
+            }
+            industryService.delete(industry);
+            returnMap.put("status",true);
+        }catch (NullPointerException e){
+            returnMap.put("status", false);
+            returnMap.put("message", e.getMessage());
+        }catch (Exception e){
+            returnMap.put("status", false);
+            returnMap.put("message", ExceptionUtils.getErrorInfo(e));
+        }
+
+        return JSONObject.toJSONString(returnMap);
+    }
+
 }

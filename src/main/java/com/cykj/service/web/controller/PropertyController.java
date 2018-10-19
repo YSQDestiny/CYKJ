@@ -295,4 +295,53 @@ public class PropertyController  {
         }
 
     }
+
+    @RequestMapping(value = "/editArea",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String updateArea(PropertyArea area,Long id){
+        Map<String,Object> returnMap = new HashMap<>();
+        try {
+            if (id != null){
+                PropertyArea temp = propertyAreaService.getById(PropertyArea.class,id);
+                if (temp != null){
+                    temp.setImportant(area.getImportant());
+                    temp.setName(area.getName());
+                    temp.setSinglePoint(area.getSinglePoint());
+                    temp.setStandard(area.getStandard());
+                    propertyAreaService.update(temp);
+                    returnMap.put("status",true);
+                }else {
+                    throw new NullPointerException("数据获取失败");
+                }
+            }else {
+                throw new NullPointerException("id获取失败");
+            }
+        }catch (NullPointerException e){
+            returnMap.put("status", false);
+            returnMap.put("message", e.getMessage());
+        }catch (Exception e){
+            returnMap.put("status", false);
+            returnMap.put("message", ExceptionUtils.getErrorInfo(e));
+        }
+        return JSONObject.toJSONString(returnMap);
+    }
+
+    @RequestMapping(value = "/deleteArea",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String deleteArea(Long id){
+        Map<String,Object> returnMap = new HashMap<>();
+        try {
+            if (id != null){
+                PropertyArea area = propertyAreaService.getById(PropertyArea.class,id);
+                propertyAreaService.delete(area);
+            }
+            returnMap.put("status",true);
+        }catch (NullPointerException e){
+            returnMap.put("status", false);
+            returnMap.put("message", e.getMessage());
+        }catch (Exception e){
+            returnMap.put("status", false);
+            returnMap.put("message", ExceptionUtils.getErrorInfo(e));
+        }
+
+        return JSONObject.toJSONString(returnMap);
+    }
 }
