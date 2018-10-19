@@ -44,9 +44,9 @@ public class Utils {
         nameMap.put("设备机房-泵房", "roomPump");
         nameMap.put("物品库房、非机动车库", "storehouse");
         nameMap.put("风险控制", "controll");
-        nameMap.put("基础服务-清洁卫生服务", "basicsSanitation");
+        nameMap.put("基础服务-清洁卫生", "basicsSanitation");
         nameMap.put("基础服务-景观绿化维护", "basicsLandscaping");
-        nameMap.put("基础服务-公示、告知", "basicsPublicity");
+        nameMap.put("基础服务-公示、公告", "basicsPublicity");
         nameMap.put("基础服务-沟通、提升", "basicsCommunicate");
     }
 
