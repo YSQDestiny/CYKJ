@@ -23,16 +23,11 @@
             </div>
         </div>
     </div>
-    <div class="mdui-row">
-        <div class="mdui-col-xs-2"></div>
-        <div class="mdui-col-xs-8">
-            <button style="width: 100%" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-indigo" onclick="location.href='${path}property/download?id=${property.id}'">生成报告</button>
-        </div>
-        <div class="mdui-col-xs-2"></div>
-    </div>
 </div>
 </body>
 </html>
 <script type="text/javascript">
-
+    //
+    //
+    //
 </script>

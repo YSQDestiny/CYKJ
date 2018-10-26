@@ -56,10 +56,10 @@
         <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
             <h3>添加区域</h3>
             <div style="margin-bottom:10px">
-                <input name="name" class="easyui-textbox" required="true" label="区域名称:" style="width:100%">
+                <input name="name" class="easyui-textbox" required="true" label="区域名称:" autocomplete="true" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
-                <input name="industry" class="easyui-textbox" required="true" label="所属行业:" style="width:100%">
+                <input name="industry" class="easyui-textbox" required="true" label="所属行业:" autocomplete="true" style="width:100%">
             </div>
         </form>
     </div>
