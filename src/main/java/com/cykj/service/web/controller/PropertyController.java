@@ -332,6 +332,8 @@ public class PropertyController  {
             if (id != null){
                 PropertyArea area = propertyAreaService.getById(PropertyArea.class,id);
                 propertyAreaService.delete(area);
+            }else {
+                throw new NullPointerException("数据获取失败！");
             }
             returnMap.put("status",true);
         }catch (NullPointerException e){
