@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -80,4 +81,56 @@ public class HydroController {
         }
         return JSONObject.toJSONString(resultMap);
     }
+
+    @RequestMapping(value = "/uploadDisaster",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String uploadDisaster(String disaster,long id) throws Exception {
+        Map<String,Object> resultMap = new HashMap<>();
+        Hydro hydro = hydroService.getById(Hydro.class,id);
+        if (disaster != null){
+            hydro.setDistaster(disaster);
+            hydroService.update(hydro);
+            resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+            resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+            resultMap.put("data","数据已保存！");
+        }else {
+            resultMap.put("code", Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("message",Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("data", "");
+        }
+        return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping(value = "/uploadElectromechanical",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String uploadElectromechanical(String electromechanical,long id) throws Exception {
+        Map<String,Object> resultMap = new HashMap<>();
+        Hydro hydro = hydroService.getById(Hydro.class,id);
+        if (electromechanical != null){
+            hydro.setElectromechanical(electromechanical);
+            hydroService.update(hydro);
+            resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+            resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+            resultMap.put("data","数据已保存！");
+        }else {
+            resultMap.put("code", Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("message",Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("data", "");
+        }
+        return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping(value = "/getList",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String getHydroList(String uniqueId){
+        Map<String,Object> resultMap = new HashMap<>();
+        if (uniqueId != null){
+            List<Hydro> hydroList = hydroService.getListByUniqueId(uniqueId);
+            if (hydroList != null){
+                resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+                resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+                resultMap.put("data",hydroList);
+            }
+        }
+        return JSONObject.toJSONString(resultMap);
+    }
+
+
 }

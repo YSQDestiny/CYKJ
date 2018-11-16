@@ -39,6 +39,10 @@
                 <p>${hydroGeology.lightning}</p>
                 <h5>地质风险：</h5>
                 <p>${hydroGeology.geology}</p>
+                <h5>火灾风险：</h5>
+                <p>${hydro.distaster}</p>
+                <h5>机电设备风险：</h5>
+                <p>${hydro.electromechanical}</p>
             </div>
         </div>
     </div>
