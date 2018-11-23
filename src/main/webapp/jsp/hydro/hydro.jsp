@@ -43,6 +43,29 @@
                 <p>${hydro.distaster}</p>
                 <h5>机电设备风险：</h5>
                 <p>${hydro.electromechanical}</p>
+                <h5>水工建筑风险：</h5>
+                <p>${hydro.building}</p>
+                <h5>其他风险：</h5>
+                <p>${hydro.other}</p>
+            </div>
+            <div class="mdui-tablep-fluid mdui-typo">
+                <h5>现场风险：</h5>
+                <table class="mdui-table">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>照片</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <C:forEach var="item" items="${imageList}">
+                        <tr>
+                            <td>${item.name}</td>
+                            <td><img style="width: 100px;height: 100px" src="data:image/png;base64,${item.img}"/></td>
+                        </tr>
+                    </C:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

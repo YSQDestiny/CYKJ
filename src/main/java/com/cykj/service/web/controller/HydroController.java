@@ -3,9 +3,11 @@ package com.cykj.service.web.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cykj.service.base.util.DateUtil;
 import com.cykj.service.entity.Hydro;
+import com.cykj.service.entity.HydroImage;
 import com.cykj.service.entity.Property;
 import com.cykj.service.model.HydroGeology;
 import com.cykj.service.web.Constants;
+import com.cykj.service.web.service.HydroImageService;
 import com.cykj.service.web.service.HydroService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class HydroController {
     @Autowired
     private HydroService hydroService;
 
+    @Autowired
+    private HydroImageService hydroImageService;
+
     @RequestMapping("/showHydro")
     private String shwoHydro(Long id, Model model) throws Exception {
         Hydro hydro = null;
@@ -40,6 +45,10 @@ public class HydroController {
         if (geologyJson != null){
             HydroGeology hydroGeology = JSONObject.parseObject(geologyJson,HydroGeology.class);
             model.addAttribute("hydroGeology",hydroGeology);
+        }
+        List<HydroImage> imageList = hydroImageService.findImagByHydroID(hydro.getId());
+        if (imageList != null){
+            model.addAttribute("imageList",imageList);
         }
         model.addAttribute("hydro",hydro);
         return "hydro/hydro";
@@ -107,6 +116,59 @@ public class HydroController {
         if (electromechanical != null){
             hydro.setElectromechanical(electromechanical);
             hydroService.update(hydro);
+            resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+            resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+            resultMap.put("data","数据已保存！");
+        }else {
+            resultMap.put("code", Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("message",Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("data", "");
+        }
+        return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping(value = "/uploadBuilding",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String uploadBuilding(String building,long id) throws Exception {
+        Map<String,Object> resultMap = new HashMap<>();
+        Hydro hydro = hydroService.getById(Hydro.class,id);
+        if (building != null){
+            hydro.setBuilding(building);
+            hydroService.update(hydro);
+            resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+            resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+            resultMap.put("data","数据已保存！");
+        }else {
+            resultMap.put("code", Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("message",Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("data", "");
+        }
+        return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping(value = "/uploadOthers",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String uploadOthers(String other,long id) throws Exception {
+        Map<String,Object> resultMap = new HashMap<>();
+        Hydro hydro = hydroService.getById(Hydro.class,id);
+        if (other != null){
+            hydro.setOther(other);
+            hydroService.update(hydro);
+            resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+            resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+            resultMap.put("data","数据已保存！");
+        }else {
+            resultMap.put("code", Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("message",Constants.RESULT_MESSAGE_FAIL);
+            resultMap.put("data", "");
+        }
+        return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping(value = "/uploadImage",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String uploadImage(String json){
+        Map<String,Object> resultMap = new HashMap<>();
+        if (json != null){
+            List<HydroImage> imageList = JSONObject.parseArray(json,HydroImage.class);
+            hydroImageService.saveImageList(imageList);
             resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
             resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
             resultMap.put("data","数据已保存！");
