@@ -19,14 +19,6 @@ public class WeatherPredictionDaoImpl extends BaseDaoImpl<WeatherPrediction> imp
 
     @Override
     public WeatherPrediction findWeatherPredictionByCity(String city) {
-        DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CSS);
-        String hql = "from WeatherPrediction where city =:city";
-        Query query = getCurrentSession().createQuery(hql);
-        query.setParameter("city",city);
-        List<WeatherPrediction> predictions = query.list();
-        if (predictions == null || predictions.size() == 0){
-            return null;
-        }
-        return predictions.get(0);
+        return null;
     }
 }

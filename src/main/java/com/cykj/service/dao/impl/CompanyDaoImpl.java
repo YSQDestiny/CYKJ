@@ -30,7 +30,7 @@ public class CompanyDaoImpl extends BaseDaoImpl<CompanyEntity> implements Compan
     @Override
     public List<CompanyEntity> getListByUniqueId(String uniqueId) {
         DynamicDataSourceHolder.setDataSourceType(DynamicDataSourceGlobal.CYKJ);
-        String hql = "from CompanyEntity where uniqueId = :uniqueId";
+        String hql = "from CompanyEntity where uniqueId =:uniqueId";
         Query query = getCurrentSession().createQuery(hql);
         query.setParameter("uniqueId",uniqueId);
         List<CompanyEntity> companyEntities = query.list();

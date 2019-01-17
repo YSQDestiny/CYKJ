@@ -19,7 +19,7 @@ public class WordUtils {
     private static Configuration configuration;
 
 //    private static final String templateFolder = WordUtils.class.getClassLoader().getResource("../../").getPath() + "WEB_INF/templetes";
-    private static final String templateFolder = "C:/WorkSpace/CYKJ/src/main/webapp/WEB-INF/templates";
+    private static final String templateFolder = "D:/WorkSpace/CYKJ/src/main/webapp/WEB-INF/templates";
     static {
         configuration = new Configuration();
         configuration.setDefaultEncoding("utf-8");

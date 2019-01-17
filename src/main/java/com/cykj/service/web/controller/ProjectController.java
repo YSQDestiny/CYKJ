@@ -4,17 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cykj.service.base.controller.BaseController;
 import com.cykj.service.base.util.Utils;
-import com.cykj.service.entity.Disasters;
-import com.cykj.service.entity.Project;
-import com.cykj.service.entity.ProjectAccident;
-import com.cykj.service.entity.WeatherInfo;
+import com.cykj.service.entity.*;
 import com.cykj.service.model.DisasterModel;
 import com.cykj.service.model.WeatherModel;
 import com.cykj.service.web.Constants;
-import com.cykj.service.web.service.DisasterService;
-import com.cykj.service.web.service.ProjectAccidetnService;
-import com.cykj.service.web.service.ProjectService;
-import com.cykj.service.web.service.WeatherInfoService;
+import com.cykj.service.web.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -49,6 +43,9 @@ public class ProjectController extends BaseController<Project> {
 
     @Autowired
     private ProjectAccidetnService projectAccidetnService;
+
+    @Autowired
+    private DisasterEntityService disasterEntityService;
 
     @RequestMapping(value = "/post",produces="text/html;charset=UTF-8")
     private @ResponseBody String saveProject(String json) throws Exception {
@@ -165,19 +162,23 @@ public class ProjectController extends BaseController<Project> {
         return "";
     }
 
-    @RequestMapping(value = "/getList",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
-    private @ResponseBody String getProjectList(String uniqueId){
+    @RequestMapping(value = "/getList",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String getProjectList(String uniqueId,String source){
         Map<String,Object> resultMap = new HashMap<>();
-
-        if (uniqueId != null){
-            List<Project> projects = projectService.findAllByUniqueId(uniqueId);
-            if (projects != null){
-                resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
-                resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
-                resultMap.put("data",projects);
+        if (source.equals("android")){
+            if (uniqueId != null){
+                List<Project> projects = projectService.findAllByUniqueId(uniqueId);
+                if (projects != null){
+                    resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+                    resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+                    resultMap.put("data",projects);
+                }else {
+                    resultMap.put("code", Constants.RESULT_CODE_FAIL);
+                    resultMap.put("message", "");
+                    resultMap.put("data", "");
+                }
             }
         }
-
         return JSONObject.toJSONString(resultMap);
     }
 
@@ -194,6 +195,29 @@ public class ProjectController extends BaseController<Project> {
                 resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
                 resultMap.put("data","");
             }
+        }
+        return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping(value = "/searchYHD",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
+    private @ResponseBody String getYHD(String json,String source){
+        Map<String,Object> resultMap = new HashMap<>();
+        if (source.equals("android")){
+            if (json != null){
+                Map<String,String> sqlMap = JSONObject.parseObject(json,Map.class);
+                List<Disaster> list = disasterEntityService.findDisaster(sqlMap);
+                resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+                resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+                resultMap.put("data",JSONObject.toJSONString(list));
+            }else {
+                resultMap.put("code", Constants.RESULT_CODE_FAIL);
+                resultMap.put("message", "");
+                resultMap.put("data", "");
+            }
+        }else {
+            resultMap.put("code", Constants.RESULT_CODE_FAIL);
+            resultMap.put("message", "");
+            resultMap.put("data", "");
         }
         return JSONObject.toJSONString(resultMap);
     }
