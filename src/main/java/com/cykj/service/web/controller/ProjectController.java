@@ -3,6 +3,7 @@ package com.cykj.service.web.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cykj.service.base.controller.BaseController;
+import com.cykj.service.base.util.DateUtil;
 import com.cykj.service.base.util.Utils;
 import com.cykj.service.entity.*;
 import com.cykj.service.model.DisasterModel;
@@ -23,10 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/project")
@@ -69,6 +67,68 @@ public class ProjectController extends BaseController<Project> {
         }
         return JSONObject.toJSONString(resultMap);
     }
+
+    /**
+     * 创建工程查勘项目
+     * @param name
+     * @param uniqueId
+     * @return
+     */
+    @RequestMapping(value = "/createProject",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String createProject(String name,String uniqueId){
+        Map<String,Object> resultMap = new HashMap<>();
+            if (!StringUtils.isEmpty(name)){
+                Project project = new Project();
+                project.setName(name);
+                project.setUniqueId(uniqueId);
+                project.setMakeTime(DateUtil.parseToSQLDate(new Date(),DateUtil.yyyyMMddHHmmss));
+                Long id = projectService.saveAndGetId(project);
+                resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+                resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+                resultMap.put("data",id);
+            }else {
+                resultMap.put("code", Constants.RESULT_CODE_FAIL);
+                resultMap.put("message","name字段不能为空！");
+                resultMap.put("data","");
+            }
+        return JSONObject.toJSONString(resultMap);
+    }
+
+    @RequestMapping(value = "/saveProject",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String saveProject(Long id,Project project) throws Exception {
+        Map<String,Object> resultMap = new HashMap<>();
+        if (id != null){
+            Project temp = projectService.getById(Project.class,id);
+            if (project != null){
+                temp.setAddr(project.getAddr());
+                temp.setTown(project.getTown());
+                temp.setProvince(project.getProvince());
+                temp.setCity(project.getCity());
+                temp.setCounty(project.getCounty());
+                temp.setConstruction(project.getConstruction());
+                temp.setBuilding(project.getBuilding());
+                temp.setType(project.getType());
+                temp.setReviewType(project.getReviewType());
+                temp.setClientContact(project.getClientContact());
+                temp.setClientPhone(project.getClientPhone());
+                temp.setClient(project.getClient());
+                projectService.update(temp);
+                resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+                resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+                resultMap.put("data","");
+            }else {
+                resultMap.put("code", Constants.RESULT_CODE_FAIL);
+                resultMap.put("message","项目数据为空！");
+                resultMap.put("data","");
+            }
+        }else{
+            resultMap.put("code", Constants.RESULT_CODE_FAIL);
+            resultMap.put("message","项目ID为空！");
+            resultMap.put("data","");
+        }
+        return JSONObject.toJSONString(resultMap);
+    }
+
 
     @RequestMapping(value = "/postStr",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     private @ResponseBody String postStr(String projectId,String geologyStr) throws Exception {
@@ -163,9 +223,8 @@ public class ProjectController extends BaseController<Project> {
     }
 
     @RequestMapping(value = "/getList",produces = "text/html;charset=UTF-8")
-    private @ResponseBody String getProjectList(String uniqueId,String source){
+    private @ResponseBody String getProjectList(String uniqueId){
         Map<String,Object> resultMap = new HashMap<>();
-        if (source.equals("android")){
             if (uniqueId != null){
                 List<Project> projects = projectService.findAllByUniqueId(uniqueId);
                 if (projects != null){
@@ -178,7 +237,6 @@ public class ProjectController extends BaseController<Project> {
                     resultMap.put("data", "");
                 }
             }
-        }
         return JSONObject.toJSONString(resultMap);
     }
 
