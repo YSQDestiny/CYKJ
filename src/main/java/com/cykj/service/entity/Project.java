@@ -73,10 +73,14 @@ public class Project extends BaseEntity {
      */
     private String analysis;
 
+    /**
+     * 建设规模
+     */
+    private String scale;
+
     private String uniqueId;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date makeTime;
+    private String makeTime;
 
     private String score;
 
@@ -212,11 +216,11 @@ public class Project extends BaseEntity {
         this.uniqueId = uniqueId;
     }
 
-    public Date getMakeTime() {
+    public String getMakeTime() {
         return makeTime;
     }
 
-    public void setMakeTime(Date makeTime) {
+    public void setMakeTime(String makeTime) {
         this.makeTime = makeTime;
     }
 
@@ -242,5 +246,13 @@ public class Project extends BaseEntity {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getScale() {
+        return scale;
+    }
+
+    public void setScale(String scale) {
+        this.scale = scale;
     }
 }

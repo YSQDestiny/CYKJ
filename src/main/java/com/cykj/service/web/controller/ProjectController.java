@@ -81,7 +81,7 @@ public class ProjectController extends BaseController<Project> {
                 Project project = new Project();
                 project.setName(name);
                 project.setUniqueId(uniqueId);
-                project.setMakeTime(DateUtil.parseToSQLDate(new Date(),DateUtil.yyyyMMddHHmmss));
+                project.setMakeTime(DateUtil.parseToString(new Date(),DateUtil.yyyyMMddHHmmss));
                 Long id = projectService.saveAndGetId(project);
                 resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
                 resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
@@ -95,11 +95,12 @@ public class ProjectController extends BaseController<Project> {
     }
 
     @RequestMapping(value = "/saveProject",produces = "text/html;charset=UTF-8")
-    private @ResponseBody String saveProject(Long id,Project project) throws Exception {
+    private @ResponseBody String saveProject(Long id,String json) throws Exception {
         Map<String,Object> resultMap = new HashMap<>();
         if (id != null){
             Project temp = projectService.getById(Project.class,id);
-            if (project != null){
+            if (json != null){
+                Project project = JSONObject.parseObject(json,Project.class);
                 temp.setAddr(project.getAddr());
                 temp.setTown(project.getTown());
                 temp.setProvince(project.getProvince());
@@ -129,6 +130,39 @@ public class ProjectController extends BaseController<Project> {
         return JSONObject.toJSONString(resultMap);
     }
 
+    @RequestMapping(value = "/updaeProject",produces = "text/html;charset=UTF-8")
+    private @ResponseBody String updateProject(Long id,String target,String json) throws Exception {
+        Map<String,Object> resultMap = new HashMap<>();
+        if (id != null){
+            Project project = projectService.getById(Project.class,id);
+            if (project != null){
+                switch (target){
+                    case "scale":
+                        project.setScale(json);
+                        projectService.update(project);
+                        break;
+                    case "geology":
+                        project.setGeological(json);
+                        projectService.update(project);
+                        break;
+                    default:
+                        break;
+                }
+                resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+                resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+                resultMap.put("data","");
+            }else {
+                resultMap.put("code", Constants.RESULT_CODE_FAIL);
+                resultMap.put("message","项目数据获取失败！");
+                resultMap.put("data","");
+            }
+        }else {
+            resultMap.put("code", Constants.RESULT_CODE_FAIL);
+            resultMap.put("message","项目id为空！");
+            resultMap.put("data","");
+        }
+        return JSONObject.toJSONString(resultMap);
+    }
 
     @RequestMapping(value = "/postStr",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     private @ResponseBody String postStr(String projectId,String geologyStr) throws Exception {
@@ -258,25 +292,19 @@ public class ProjectController extends BaseController<Project> {
     }
 
     @RequestMapping(value = "/searchYHD",method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
-    private @ResponseBody String getYHD(String json,String source){
+    private @ResponseBody String getYHD(String json){
         Map<String,Object> resultMap = new HashMap<>();
-        if (source.equals("android")){
             if (json != null){
                 Map<String,String> sqlMap = JSONObject.parseObject(json,Map.class);
                 List<Disaster> list = disasterEntityService.findDisaster(sqlMap);
                 resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
                 resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
-                resultMap.put("data",JSONObject.toJSONString(list));
+                resultMap.put("data",list);
             }else {
                 resultMap.put("code", Constants.RESULT_CODE_FAIL);
                 resultMap.put("message", "");
                 resultMap.put("data", "");
             }
-        }else {
-            resultMap.put("code", Constants.RESULT_CODE_FAIL);
-            resultMap.put("message", "");
-            resultMap.put("data", "");
-        }
         return JSONObject.toJSONString(resultMap);
     }
 
