@@ -7,6 +7,7 @@ import com.cykj.service.base.util.DateUtil;
 import com.cykj.service.base.util.Utils;
 import com.cykj.service.entity.*;
 import com.cykj.service.model.DisasterModel;
+import com.cykj.service.model.StringModel;
 import com.cykj.service.model.WeatherModel;
 import com.cykj.service.web.Constants;
 import com.cykj.service.web.service.*;
@@ -130,7 +131,7 @@ public class ProjectController extends BaseController<Project> {
         return JSONObject.toJSONString(resultMap);
     }
 
-    @RequestMapping(value = "/updaeProject",produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateProject",produces = "text/html;charset=UTF-8")
     private @ResponseBody String updateProject(Long id,String target,String json) throws Exception {
         Map<String,Object> resultMap = new HashMap<>();
         if (id != null){
@@ -143,6 +144,23 @@ public class ProjectController extends BaseController<Project> {
                         break;
                     case "geology":
                         project.setGeological(json);
+                        projectService.update(project);
+                        break;
+                    case "analysis":
+                        Map<String,Object> map = JSONObject.parseObject(json,Map.class);
+                        Map<String,String> YHDmap = null;
+                        if (map.get("YHD").equals("")){
+                            YHDmap = null;
+                        }else {
+                            YHDmap = (Map<String, String>) map.get("YHD");
+                        }
+                        String lv = (String) map.get("lv");
+                        project.setLv(lv);
+                        if (YHDmap != null){
+                            project.setYhd(JSONObject.toJSONString(YHDmap));
+                        }else {
+                            project.setYhd("");
+                        }
                         projectService.update(project);
                         break;
                     default:
@@ -363,8 +381,24 @@ public class ProjectController extends BaseController<Project> {
     private String showProjectReport(String projectId,Model model) throws Exception {
         Project project = projectService.getById(Project.class,Long.parseLong(projectId));
         model.addAttribute("project",project);
-        String passingPoint = project.getPassingPost();
-        List<String> nameList = JSONArray.parseArray(passingPoint,String.class);
+        List<String> nameList = new ArrayList<>();
+        nameList.add(project.getCounty());
+        Map<String,String> scaleMap = JSONObject.parseObject(project.getScale(),Map.class);
+        List<StringModel> scaleList = new ArrayList<>();
+        for (String str : scaleMap.keySet()){
+            scaleList.add(new StringModel(str,scaleMap.get(str)));
+        }
+        model.addAttribute("scaleList",scaleList);
+        List<StringModel> yhdList = new ArrayList<>();
+        if (project.getYhd().equals("")){
+
+        }else {
+            Map<String,String> yhdMap = JSONObject.parseObject(project.getYhd(),Map.class);
+            for (String str : yhdMap.keySet()){
+                yhdList.add(new StringModel(str,yhdMap.get(str)));
+            }
+            model.addAttribute("yhdList",yhdList);
+        }
         List<WeatherInfo> weatherInfoList = new ArrayList<>();
         for (String name : nameList){
             if (name.length() > 2){

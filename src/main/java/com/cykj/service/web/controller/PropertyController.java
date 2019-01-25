@@ -52,7 +52,7 @@ public class PropertyController  {
         if (StringUtils.isEmpty(json)){
             resultMap.put("code", Constants.RESULT_MESSAGE_FAIL);
             resultMap.put("message",Constants.RESULT_MESSAGE_FAIL);
-            resultMap.put("data",JSONObject.toJSONString(null));
+            resultMap.put("data","");
         }else {
             Property property = JSONObject.parseObject(json,Property.class);
             Long propertyId = propertyService.saveAndGetId(property);

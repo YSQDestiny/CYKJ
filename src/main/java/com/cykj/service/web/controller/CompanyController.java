@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.*;
 
 /**
@@ -222,6 +223,9 @@ public class CompanyController {
     @RequestMapping("/exportDoc")
     public @ResponseBody void exportDoc(Long id, HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (id != null){
+            File directory = new File("");
+            String courseFile = directory.getCanonicalPath();
+
             CompanyEntity companyEntity = companyService.getById(CompanyEntity.class,id);
             Map<String,Object> map = new HashMap<>();
             map.put("companyName",companyEntity.getName());
@@ -231,7 +235,7 @@ public class CompanyController {
             map.put("industry",companyEntity.getIndustry());
             map.put("geologyStr",companyEntity.getGeologyStr());
             map.put("weatherStr",companyEntity.getWeatherStr());
-            map.put("weatherPhoto",Base64Img.GetImageStrFromPath("C://chengdu.png"));
+            map.put("weatherPhoto",Base64Img.GetImageStrFromPath(courseFile + "/src/main/webapp/WEB-INF/img/chengdu.png"));
             map.put("makeTime",DateUtil.parseToString(companyEntity.getMakeTime(),DateUtil.yyyyMMdd));
             List<Record> records = recordService.findRecordByCompanyId(id);
             if (records == null){

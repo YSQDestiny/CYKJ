@@ -7,24 +7,77 @@
     <%@include file="../common_js.jsp" %>
     <script src="${path}static/js/echarts.js"></script>
 </head>
+<style>
+
+</style>
 <body>
 <div class="mdui-container">
     <div class="mdui-typo">
         <h1>项目名称：${project.name}</h1>
         <small>创建时间：${project.makeTime}</small>
         <ul>
-            <li>所属地区：${project.area}</li>
-            <li>工程项目部：${project.department}</li>
-            <li>项目标的：${project.project_target}</li>
+
+            <li>项目所在地：${project.province}${project.city}${project.county}${project.town}</li>
+            <li>详细地址：${project.addr}</li>
+            <li>施工单位：${project.construction}</li>
+            <li>建设单位：${project.building}</li>
             <li>工程类型：${project.type}</li>
-            <li>项目起点：${project.start}</li>
-            <li>项目终点：${project.ending}</li>
-            <li>项目全长（KM）：${project.length}</li>
+            <li>查勘类型：${project.reviewType}</li>
             <li>项目评分：${project.score} <i class="mdui-icon material-icons" mdui-dialog="{target: '#exampleDialog'}">info</i></li>
             <li>风险等级：${project.level}</li>
         </ul>
+        <div class=".mdui-col-xs-3 mdui-tablep-fluid mdui-typo">
+            <h5>建设规模：</h5>
+            <table class="mdui-table">
+                <thead>
+                <tr>
+                    <th>项目</th>
+                    <th>数量</th>
+                </tr>
+                </thead>
+                <tbody>
+                <C:forEach var="item" items="${scaleList}">
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.value}</td>
+                    </tr>
+                </C:forEach>
+                </tbody>
+            </table>
+        </div>
+        <h5>委托方：</h5>
+        <ul>
+            <li>委托方：${project.client}</li>
+            <li>委托方联系人：${project.clientContact}</li>
+            <li>委托方联系电话：${project.clientPhone}</li>
+        </ul>
         <h5>地质描述：</h5>
         <p>${project.geological}</p>
+        <h5>地质灾害分析</h5>
+        <ul>
+            <li>地质风险等级：${project.lv}</li>
+        </ul>
+        <div class=".mdui-col-xs-3 mdui-tablep-fluid mdui-typo">
+            <h5>地灾隐患点：</h5>
+            <C:if test="${yhdList != null}" >
+                <table class="mdui-table">
+                    <thead>
+                    <tr>
+                        <th>隐患点名称</th>
+                        <th>发生概率</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <C:forEach var="item" items="${yhdList}">
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.value}</td>
+                        </tr>
+                    </C:forEach>
+                    </tbody>
+                </table>
+            </C:if>
+        </div>
     </div>
 
     <div class="mdui-dialog" id="exampleDialog">
@@ -186,13 +239,6 @@
             </tbody>
         </table>
     </div>
-    <div class="mdui-row mdui-row-gapless">
-            <div class="mdui-col-xs-2"></div>
-            <div class="mdui-col-xs-8">
-                <button style="width: 100%" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-indigo" onclick="location.href='${path}project/downloadDoc'">生成报告</button>
-            </div>
-            <div class="mdui-col-xs-2"></div>
-        </div>
     <div style="height: 100px"></div>
 </div>
 <script type="text/javascript">

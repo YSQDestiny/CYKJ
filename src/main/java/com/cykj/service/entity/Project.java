@@ -78,6 +78,16 @@ public class Project extends BaseEntity {
      */
     private String scale;
 
+    /**
+     * 地质风险等级
+     */
+    private String lv;
+
+    /**
+     * 隐患点
+     */
+    private String yhd;
+
     private String uniqueId;
 
     private String makeTime;
@@ -254,5 +264,21 @@ public class Project extends BaseEntity {
 
     public void setScale(String scale) {
         this.scale = scale;
+    }
+
+    public String getLv() {
+        return lv;
+    }
+
+    public void setLv(String lv) {
+        this.lv = lv;
+    }
+
+    public String getYhd() {
+        return yhd;
+    }
+
+    public void setYhd(String yhd) {
+        this.yhd = yhd;
     }
 }
