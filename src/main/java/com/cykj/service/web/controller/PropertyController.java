@@ -219,6 +219,10 @@ public class PropertyController  {
         return JSONObject.toJSONString(resultMap);
     }
 
+    private String uploadPropertyImg(){
+        return null;
+    }
+
     @RequestMapping("/showProperty")
     private String showPropertyReport(String propertyId, Model model) throws Exception {
         Property property = propertyService.getById(Property.class,Long.parseLong(propertyId));
@@ -296,6 +300,20 @@ public class PropertyController  {
 
     }
 
+    /**
+     * ni shi wo de yan
+     * dai wo lin lve shi jie de bian huan
+     * wo mei you shuo huang he bi yao shuo huan
+     * ai yi ge ren mei ai dao you neng zen me yang
+     * wo mei you shuo huang
+     */
+
+    /**
+     *
+     * @param area
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/editArea",produces = "text/html;charset=UTF-8")
     private @ResponseBody String updateArea(PropertyArea area,Long id){
         Map<String,Object> returnMap = new HashMap<>();

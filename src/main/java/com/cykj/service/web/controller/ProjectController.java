@@ -296,15 +296,12 @@ public class ProjectController extends BaseController<Project> {
     private @ResponseBody String postAccident(String accidentStr) throws Exception {
         Map<String,Object> resultMap = new HashMap<>();
         if (accidentStr != null){
-            List<ProjectAccident> projectAccidents = JSONObject.parseArray(accidentStr,ProjectAccident.class);
-            if (projectAccidents != null){
-                for (ProjectAccident projectAccident : projectAccidents){
-                    projectAccidetnService.save(projectAccident);
-                }
-                resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
-                resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
-                resultMap.put("data","");
-            }
+            ProjectAccident projectAccident = JSONObject.parseObject(accidentStr,ProjectAccident.class);
+            projectAccidetnService.save(projectAccident);
+
+            resultMap.put("code", Constants.RESULT_CODE_SUCCESS);
+            resultMap.put("message",Constants.RESULT_MESSAGE_SUCCESS);
+            resultMap.put("data","");
         }
         return JSONObject.toJSONString(resultMap);
     }
@@ -365,7 +362,6 @@ public class ProjectController extends BaseController<Project> {
     private ResponseEntity<byte[]> downloadDoc(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         File file = new File("C:/WorkSpace/CYKJ/src/main/webapp/WEB-INF/doc/project_report.docx");
-//        File file = new File("F:/workspace/CYKJ/src/main/webapp/WEB-INF/doc/project_report.docx");
         byte[] body = null;
         InputStream is = new FileInputStream(file);
         body = new byte[is.available()];
@@ -390,14 +386,14 @@ public class ProjectController extends BaseController<Project> {
         }
         model.addAttribute("scaleList",scaleList);
         List<StringModel> yhdList = new ArrayList<>();
-        if (project.getYhd().equals("")){
-
-        }else {
-            Map<String,String> yhdMap = JSONObject.parseObject(project.getYhd(),Map.class);
-            for (String str : yhdMap.keySet()){
-                yhdList.add(new StringModel(str,yhdMap.get(str)));
+        if (project.getYhd()!=null){
+            if(!project.getYhd().equals("")){
+                Map<String,String> yhdMap = JSONObject.parseObject(project.getYhd(),Map.class);
+                for (String str : yhdMap.keySet()){
+                    yhdList.add(new StringModel(str,yhdMap.get(str)));
+                }
+                model.addAttribute("yhdList",yhdList);
             }
-            model.addAttribute("yhdList",yhdList);
         }
         List<WeatherInfo> weatherInfoList = new ArrayList<>();
         for (String name : nameList){

@@ -230,7 +230,7 @@
                 <tr>
                     <td>${item.id}</td>
                     <td>${item.name}</td>
-                    <td><img style="width: 100px;height: 100px" src="data:image/png;base64,${item.sitePhoto}"/></td>
+                    <td><img style="width: 100px;height: 100px" src="${item.sitePhoto}"/></td>
                     <td>${item.type}</td>
                     <td>${item.instructions}</td>
                     <td>${item.suggestion}</td>
